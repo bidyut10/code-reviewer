@@ -1,12 +1,8 @@
 import { AiOutlineGithub } from "react-icons/ai";
-// import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-//   const navigate = useNavigate();
-
   const handleLogin = () => {
-    window.location.href = "http://localhost:3000/auth/github";
-    // The server-side GitHub OAuth should redirect to /home after login
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/github`;
   };
 
   return (
