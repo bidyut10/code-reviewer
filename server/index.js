@@ -108,5 +108,27 @@ app.get('/api/github/user', async (req, res) => {
   }
 });
 
+// New API to fetch commits for a specific repository
+app.get('/api/github/repos/:repo/commits', async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  const { repo } = req.params;
+
+  try {
+    const commitsResponse = await axios.get(`https://api.github.com/repos/${req.user.username}/${repo}/commits`, {
+      headers: {
+        Authorization: `token ${req.user.accessToken}`
+      }
+    });
+
+    res.json(commitsResponse.data);  // Return the commit data
+  } catch (error) {
+    res.status(500).json({ error: `Failed to fetch commits for repository: ${repo}` });
+  }
+});
+
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
