@@ -10,7 +10,7 @@ const HomePage = () => {
   };
 
   return (
-    <section className="bg-white text-gray-800 min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-96">
+    <div className="bg-white text-gray-800 min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-96">
       <div className="text-center space-y-4">
         <p className="text-lg sm:text-xl md:text-2xl lg:text-xl font-medium text-start uppercase pt-2 pb-20 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-transparent bg-clip-text">
           Code Reviewer
@@ -43,7 +43,7 @@ const HomePage = () => {
           className="w-full max-w-lg lg:max-w-3xl rounded-3xl shadow-xl transform hover:scale-105 transition duration-500"
         />
       </div>
-    </section>
+    </div>
   );
 };
 
