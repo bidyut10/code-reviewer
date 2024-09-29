@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
-
+import "../../App.css";
+import { FaRegUser } from "react-icons/fa";
+import { CiCalendarDate } from "react-icons/ci";
 const RepoCommits = ({
   connectedRepo,
   commits,
@@ -9,32 +11,46 @@ const RepoCommits = ({
   return (
     <>
       {connectedRepo && commits.length > 0 ? (
-        <div className="mt-6 max-h-screen overflow-y-auto border-t pt-4 scrollbar">
-          <h3 className="text-xl font-semibold mb-2">
-            Commits for {selectedRepoName}
+        <div className="mt-2 max-h-[450px] overflow-y-auto pt-2 scrollbar">
+          <h3 className="text-2xl mb-5">
+            Commits for{" "}
+            <span className="text-gray-700">{selectedRepoName}</span>
           </h3>
-          <ul className="space-y-4">
+          <ul className="space-y-2 pr-2">
             {commits.map((commit, index) => (
-              <li key={index} className="border-b pb-4">
-                <p className="font-medium">{commit.commit.message}</p>
-                <p className="text-sm text-gray-500 mt-1">
-                  Author: {commit.commit.author.name} - Date:{" "}
-                  {new Date(commit.commit.author.date).toLocaleString()}
-                </p>
+              <li
+                key={index}
+                className="border border-gray-200 p-6 rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out hover:border-gray-600 bg-white"
+              >
+                <p className="text-lg">{commit.commit.message}</p>
                 <div className="flex items-center space-x-4 mt-2">
+                  <div className="flex items-center space-x-2">
+                    <FaRegUser className="text-sm text-gray-400" />
+                    <span>{commit.commit.author.name}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <CiCalendarDate className="text-lg text-gray-400" />
+                    <span>
+                      {new Date(commit.commit.author.date).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-end gap-4">
                   <a
                     href={commit.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-purple-600 underline hover:text-purple-700 flex items-center"
+                    className="text-gray-500 hover:text-gray-600 transition-colors duration-200 underline"
                   >
-                    View on GitHub
+                    View on Github
                   </a>
                   <button
-                    onClick={() => handleStartCodeReview(commit.sha)}
-                    className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
+                    onClick={() =>
+                      handleStartCodeReview(selectedRepoName, commit.sha)
+                    }
+                    className="underline hover:text-gray-900 transition-colors duration-200"
                   >
-                    Start Code Review
+                    Code Review
                   </button>
                 </div>
               </li>
@@ -42,17 +58,19 @@ const RepoCommits = ({
           </ul>
         </div>
       ) : connectedRepo ? (
-        <p>No commits found for this repository.</p>
+        <p className="text-gray-900">
+          No commits found for this repository.
+        </p>
       ) : null}
     </>
   );
 };
 
 RepoCommits.propTypes = {
-  connectedRepo: PropTypes.bool.isRequired,
-  commits: PropTypes.array.isRequired,
+  connectedRepo: PropTypes.bool.isRequigray,
+  commits: PropTypes.array.isRequigray,
   selectedRepoName: PropTypes.string,
-  handleStartCodeReview: PropTypes.func.isRequired,
+  handleStartCodeReview: PropTypes.func.isRequigray,
 };
 
 export default RepoCommits;

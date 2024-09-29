@@ -13,8 +13,8 @@ const RecentRepositories = ({ repos }) => {
         {sortedRepos.slice(0, 3).map((repo) => (
           <li key={repo.id} className="flex justify-between items-center">
             <div className="flex items-center">
-              <IoLogoGithub className="text-gray-700 mr-2" />
-              <span className="font-medium">{repo.name}</span>
+              <IoLogoGithub className="text-gray-600 mr-2" />
+              <span className="">{repo.name}</span>
             </div>
             <span className="text-sm text-gray-500">
               {new Date(repo.created_at).toLocaleString()}

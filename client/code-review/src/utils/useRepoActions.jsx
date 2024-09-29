@@ -3,18 +3,19 @@ import axios from "axios";
 
 const useRepoActions = () => {
   const [commits, setCommits] = useState([]);
-  const [connectedRepo, setConnectedRepo] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [connectedRepo, setConnectedRepo] = useState(null); // Null by default
 
   const handleConnectRepo = async (selectedRepo) => {
     if (selectedRepo) {
       try {
         const commitsResponse = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/github/repos/${selectedRepo}/commits`,
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/github/repos/${selectedRepo}/commits`,
           { withCredentials: true }
         );
-        setCommits(commitsResponse.data || []);
-        setConnectedRepo(true);
+        setCommits(commitsResponse.data || []); // Store commits
+        setConnectedRepo(selectedRepo); // Set the connected repo
       } catch (error) {
         console.error("Failed to fetch commits", error);
       }
@@ -25,7 +26,9 @@ const useRepoActions = () => {
     if (selectedRepo && commitSha) {
       try {
         const filesResponse = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/github/repos/${selectedRepo}/commits/${commitSha}`,
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/github/repos/${selectedRepo}/commits/${commitSha}`,
           { withCredentials: true }
         );
         console.log("Changed files:", filesResponse.data.files);
@@ -36,21 +39,20 @@ const useRepoActions = () => {
   };
 
   const handleDisconnectRepo = () => {
-    setShowConfirmation(true);
+    setConnectedRepo(null); // Clear the connected repo
+    setCommits([]); // Clear commits after disconnect
   };
 
   const confirmDisconnectRepo = (confirm) => {
     if (confirm) {
-      setConnectedRepo(false);
-      setCommits([]);
+      handleDisconnectRepo(); // Handle disconnect if confirmed
     }
-    setShowConfirmation(false);
   };
 
   return {
     commits,
     connectedRepo,
-    showConfirmation,
+    setConnectedRepo, // Added this to allow setting from other components
     handleConnectRepo,
     handleStartCodeReview,
     handleDisconnectRepo,

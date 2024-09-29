@@ -4,33 +4,32 @@ import RepoDropdown from "./RepoDropdown";
 import RepoCommits from "./RepoCommits";
 import ConfirmDisconnectModal from "./ConfirmDisconnectModal";
 import "../../App.css";
+import useRepoActions from "../../utils/useRepoActions";
+import useGitHubData from "../../utils/useGitHubData";
 
-const RepoSelector = ({
-  repos,
-  searchTerm,
-  setSearchTerm,
-  selectedRepo,
-  setSelectedRepo,
-  handleConnectRepo,
-  connectedRepo,
-  handleDisconnectRepo,
-  commits,
-  selectedRepoName,
-  handleStartCodeReview,
-}) => {
+const RepoSelector = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const dropdownRef = useRef(null);
+  const {
+    commits,
+    connectedRepo,
+    setConnectedRepo, // Add this to manage the repo state directly
+    handleConnectRepo,
+    handleStartCodeReview,
+    confirmDisconnectRepo,
+  } = useRepoActions();
+  const { repos } = useGitHubData();
+  const [selectedRepo, setSelectedRepo] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const clearSelection = () => {
-    setSelectedRepo(null); // Clear the selected repository
-    setSearchTerm(""); // Clear the search term
+    setSelectedRepo(""); // Reset selectedRepo properly
+    setSearchTerm("");
   };
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        // Hide the dropdown if clicked outside
         clearSelection();
       }
     };
@@ -41,12 +40,21 @@ const RepoSelector = ({
     };
   }, []);
 
-  return (
-    <div className="repo-selector w-[600px]" ref={dropdownRef}>
-      <h2 className="text-2xl font-semibold mb-4 uppercase">
-        Select a Repository
-      </h2>
+  const handleRepoConnect = () => {
+    handleConnectRepo(selectedRepo).then(() => {
+      setConnectedRepo(selectedRepo); // Set the selected repo as connected repo
+      clearSelection(); // Clear selection after connecting
+    });
+  };
 
+  const handleRepoDisconnect = () => {
+    confirmDisconnectRepo(true); // Confirm and handle disconnect
+    setConnectedRepo(null); // Clear the connected repo
+    setSelectedRepo(""); // Clear the selected repo
+  };
+
+  return (
+    <div className="repo-selector w-[700px]" ref={dropdownRef}>
       <RepoDropdown
         repos={repos}
         searchTerm={searchTerm}
@@ -60,13 +68,10 @@ const RepoSelector = ({
       {!connectedRepo ? (
         selectedRepo && (
           <button
-            onClick={() => {
-              handleConnectRepo();
-              clearSelection(); // Clear selection on connect
-            }}
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 w-full mb-2"
+            onClick={handleRepoConnect}
+            className="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-950 w-full mb-2"
           >
-            Connect Repo
+            Connect Repository
           </button>
         )
       ) : (
@@ -75,28 +80,29 @@ const RepoSelector = ({
             onClick={() => setModalVisible(true)}
             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 flex-1"
           >
-            Disconnect Repo
+            Disconnect Repository
           </button>
         </div>
       )}
 
       {/* Display Commits for the Connected Repo */}
-      <RepoCommits
-        connectedRepo={connectedRepo}
-        commits={commits}
-        selectedRepoName={selectedRepoName}
-        handleStartCodeReview={handleStartCodeReview}
-      />
+      {connectedRepo && (
+        <RepoCommits
+          connectedRepo={connectedRepo}
+          commits={commits}
+          selectedRepoName={connectedRepo} // Show connected repo name
+          handleStartCodeReview={handleStartCodeReview}
+        />
+      )}
 
       {/* Modal for Disconnect Confirmation */}
       {modalVisible && (
         <ConfirmDisconnectModal
           confirmDisconnectRepo={(confirm) => {
             if (confirm) {
-              handleDisconnectRepo(); // Clear commit section on disconnect
-              clearSelection(); // Clear the selection as well
+              handleRepoDisconnect(); // Disconnect and clear state
             }
-            setModalVisible(false);
+            setModalVisible(false); // Hide the modal
           }}
         />
       )}
@@ -111,11 +117,11 @@ RepoSelector.propTypes = {
   selectedRepo: PropTypes.string,
   setSelectedRepo: PropTypes.func.isRequired,
   handleConnectRepo: PropTypes.func.isRequired,
-  connectedRepo: PropTypes.bool.isRequired,
+  connectedRepo: PropTypes.string,
   handleDisconnectRepo: PropTypes.func.isRequired,
   commits: PropTypes.array.isRequired,
   selectedRepoName: PropTypes.string,
-  handleStartCodeReview: PropTypes.func.isRequired,
+  handleStartCodeReview: PropTypes.func,
 };
 
 export default RepoSelector;
