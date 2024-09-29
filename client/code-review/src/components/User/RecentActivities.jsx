@@ -9,12 +9,12 @@ const RecentActivities = ({ events }) => {
           {events.map((event, index) => (
             <li
               key={index}
-              className="relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-gray-300"
+              className="relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-gray-100"
             >
               <div className="ml-4">
                 <div className="flex items-center space-x-2">
-                  <div className="h-2 w-2 bg-blue-500 rounded-full"></div>
-                  <p className="font-medium">{event.type}</p>
+                  <div className="h-2 w-2 bg-green-400 rounded-full"></div>
+                  <p>{event.type}</p>
                 </div>
                 <div className="flex justify-between items-center gap-2">
                   <p className="text-sm text-gray-600">{event.repo.name}</p>

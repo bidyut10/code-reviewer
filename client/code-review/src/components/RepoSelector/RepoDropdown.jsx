@@ -44,8 +44,8 @@ const RepoDropdown = ({
 
   return (
     <div className="relative mb-4" id="repo-dropdown">
-      <div className="flex items-center border rounded relative">
-        <FiSearch className="ml-2 text-gray-500" />
+      <div className="flex items-center border border-gray-900 rounded relative">
+        <FiSearch className="ml-2 " />
         <input
           type="text"
           placeholder="Search or select a repository..."
@@ -58,7 +58,7 @@ const RepoDropdown = ({
         />
         {selectedRepo && (
           <IoMdClose
-            className="text-gray-500 cursor-pointer mr-2"
+            className=" cursor-pointer mr-2"
             onClick={clearSelection}
           />
         )}
@@ -66,12 +66,12 @@ const RepoDropdown = ({
 
       {/* Custom Dropdown */}
       {isOpen && filteredRepos.length > 0 && (
-        <ul className="dropdown-list absolute w-full bg-white border border-gray-300 rounded-b max-h-60 overflow-y-auto z-10 scrollbar">
+        <ul className="dropdown-list absolute w-full bg-white rounded-b max-h-60 overflow-y-auto z-10 scrollbar">
           {filteredRepos.map((repo) => (
             <li
               key={repo.id}
               onClick={() => handleRepoSelect(repo)}
-              className="p-2 hover:bg-gray-100 cursor-pointer"
+              className="px-4 py-2 hover:bg-gray-50 cursor-pointer"
             >
               {repo.name}
             </li>

@@ -1,26 +1,20 @@
-/* Styling for the dropdown */
 .dropdown-list {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .scrollbar::-webkit-scrollbar {
     width: 4px;
-    /* Width of the scrollbar */
 }
 
 .scrollbar::-webkit-scrollbar-track {
     background: transparent;
-    /* Background of the scrollbar track */
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    /* Color of the scrollbar thumb */
+    background: #979797;
     border-radius: 4px;
-    /* Rounded corners for the scrollbar thumb */
 }
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #a1a1aa;
-    /* Darker color on hover */
+    background: #000000;
 }
