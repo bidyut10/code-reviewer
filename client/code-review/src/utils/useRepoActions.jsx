@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
 const useRepoActions = () => {
   const [commits, setCommits] = useState([]);
   const [connectedRepo, setConnectedRepo] = useState(null); // Null by default
+  const navigate = useNavigate(); // Add useNavigate for redirection
 
   const handleConnectRepo = async (selectedRepo) => {
     if (selectedRepo) {
@@ -25,15 +27,18 @@ const useRepoActions = () => {
   const handleStartCodeReview = async (selectedRepo, commitSha) => {
     if (selectedRepo && commitSha) {
       try {
-        const filesResponse = await axios.get(
+        const reviewResponse = await axios.get(
           `${
             import.meta.env.VITE_BACKEND_URL
           }/api/github/repos/${selectedRepo}/commits/${commitSha}`,
           { withCredentials: true }
         );
-        console.log("Changed files:", filesResponse.data.files);
+        console.log("Code review:", reviewResponse.data);
+
+        // Redirect to /response and pass the review data via state
+        navigate("/response", { state: { review: reviewResponse.data } });
       } catch (error) {
-        console.error("Failed to fetch changed files", error);
+        console.error("Failed to fetch code review", error);
       }
     }
   };
@@ -52,7 +57,7 @@ const useRepoActions = () => {
   return {
     commits,
     connectedRepo,
-    setConnectedRepo, // Added this to allow setting from other components
+    setConnectedRepo,
     handleConnectRepo,
     handleStartCodeReview,
     handleDisconnectRepo,

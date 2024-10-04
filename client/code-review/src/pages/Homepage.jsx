@@ -21,11 +21,11 @@ const HomePage = () => {
           CONTACT US
         </button>
       </div>
-      <p className="text-7xl lg:text-8xl mt-12 lg:mt-24">
+      <p className="text-7xl lg:text-8xl mt-28 lg:mt-24">
         Your <span className="text-[#c1ff72]">AI</span> Assistant for
       </p>
       <p className="text-7xl lg:text-8xl">Efficient Code Review</p>
-      <p className="railway mt-12 text-xl">
+      <p className="railway mt-16 lg:mt-12 text-xl">
         Receive instant, AI-driven feedback to enhance your code quality
         effortlessly.
       </p>
@@ -38,7 +38,7 @@ const HomePage = () => {
           Login With GitHub
         </button>
       </div>
-      <div className="mt-4 sm:mt-8 lg:mt-12 w-full h-auto flex justify-center">
+      <div className="mt-12 w-full h-auto flex justify-center">
         <img src={c} alt="" className="w-full rounded-3xl" />
       </div>
       <h2 className="italiana text-3xl sm:text-4xl md:text-7xl mt-48 text-center md:text-end">
