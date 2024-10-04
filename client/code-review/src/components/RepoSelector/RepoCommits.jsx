@@ -11,7 +11,7 @@ const RepoCommits = ({
   return (
     <>
       {connectedRepo && commits.length > 0 ? (
-        <div className="mt-2 max-h-[450px] overflow-y-auto pt-2 scrollbar">
+        <div className="mt-2 max-h-[470px] overflow-y-auto pt-2 scrollbar">
           <h3 className="text-2xl mb-5">
             Commits for{" "}
             <span className="text-gray-700">{selectedRepoName}</span>
@@ -20,7 +20,7 @@ const RepoCommits = ({
             {commits.map((commit, index) => (
               <li
                 key={index}
-                className="border border-gray-200 p-6 rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out hover:border-gray-600 bg-white"
+                className="border border-gray-200 p-6 rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out hover:border-[#aeea60] bg-white"
               >
                 <p className="text-lg">{commit.commit.message}</p>
                 <div className="flex items-center space-x-4 mt-2">
@@ -40,7 +40,7 @@ const RepoCommits = ({
                     href={commit.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-500 hover:text-gray-600 transition-colors duration-200 underline"
+                    className="px-4 py-2 rounded-3xl bg-[#c1ff72]"
                   >
                     View on Github
                   </a>
@@ -48,7 +48,7 @@ const RepoCommits = ({
                     onClick={() =>
                       handleStartCodeReview(selectedRepoName, commit.sha)
                     }
-                    className="underline hover:text-gray-900 transition-colors duration-200"
+                    className="px-4 py-2 rounded-3xl bg-gray-950 text-white"
                   >
                     Code Review
                   </button>
@@ -58,19 +58,17 @@ const RepoCommits = ({
           </ul>
         </div>
       ) : connectedRepo ? (
-        <p className="text-gray-900">
-          No commits found for this repository.
-        </p>
+        <p className="text-gray-900">No commits found for this repository.</p>
       ) : null}
     </>
   );
 };
 
 RepoCommits.propTypes = {
-  connectedRepo: PropTypes.bool.isRequigray,
-  commits: PropTypes.array.isRequigray,
+  connectedRepo: PropTypes.bool.isRequired,
+  commits: PropTypes.array.isRequired,
   selectedRepoName: PropTypes.string,
-  handleStartCodeReview: PropTypes.func.isRequigray,
+  handleStartCodeReview: PropTypes.func.isRequired,
 };
 
 export default RepoCommits;
