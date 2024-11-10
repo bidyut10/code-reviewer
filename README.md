@@ -2,7 +2,7 @@
 
 **AI-Powered Code Reviews for Your GitHub Repositories**
 
-![CodeWise Hero](./assets/cw_hero.png)
+![CodeWise Hero](./assets/Home.png)
 
 ## Overview
 
@@ -18,12 +18,12 @@ Users can securely log in using their GitHub accounts, ensuring a seamless exper
 - **Detailed Commit Histories:** Access and review detailed commit histories.
 - **Control Over Projects:** Manage your repositories with complete control, tracking project changes over time.
 
-![CodeWise Home](./assets/cw_home.png)
+![CodeWise Home](./assets/Main.png)
 
 ### 3. AI-Powered Code Reviews
 The standout feature of CodeWise! Once connected to a repository, users can request a code review. The AI analyzes the code across commits, compares changes to best practices, and provides intelligent feedback. The reviews aim to improve code quality and help developers adhere to coding standards effortlessly.
 
-![Code Review Page](./assets/cw_review.png)
+![Code Review Page](./assets/Review.png)
 
 ## How It Works
 
@@ -54,3 +54,21 @@ CodeWise is built using modern technologies to deliver fast and responsive perfo
    ```bash
    git clone https://github.com/yourusername/codewise.git
    cd codewise
+
+   client side: 
+
+   cd ..code-reviewer/client/code-review/
+
+   npm install
+
+   npm run dev
+
+
+
+   backend side:
+
+   cd ..code-reviewer/server/
+
+   npm install
+
+   npm run start
