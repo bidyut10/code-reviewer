@@ -12,7 +12,7 @@ const HomeNavbar = () => {
           className="px-6 py-1 rounded-full text-xl bg-gray-950 text-white"
           onClick={handleLogin}
         >
-          <h2>Log In</h2>
+          Log In
         </button>
       </div>
     </div>

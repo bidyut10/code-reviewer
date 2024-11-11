@@ -54,7 +54,7 @@ const RepoSelector = () => {
   };
 
   return (
-    <div className="repo-selector w-[700px]" ref={dropdownRef}>
+    <div className="repo-selector w-full md:w-[700px]" ref={dropdownRef}>
       <RepoDropdown
         repos={repos}
         searchTerm={searchTerm}
@@ -69,7 +69,7 @@ const RepoSelector = () => {
         selectedRepo && (
           <button
             onClick={handleRepoConnect}
-            className="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-950 w-full mb-2"
+            className="bg-gray-950 text-white px-4 py-2 rounded hover:bg-black w-full mb-2"
           >
             Connect Repository
           </button>

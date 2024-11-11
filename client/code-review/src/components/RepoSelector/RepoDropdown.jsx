@@ -44,7 +44,7 @@ const RepoDropdown = ({
 
   return (
     <div className="relative mb-4" id="repo-dropdown">
-      <div className="flex items-center border border-gray-900 rounded relative">
+      <div className="flex items-center border border-gray-950 rounded relative">
         <FiSearch className="ml-4 " />
         <input
           type="text"

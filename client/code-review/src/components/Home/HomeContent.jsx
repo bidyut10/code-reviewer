@@ -4,7 +4,7 @@ import image2 from "../../assets/users/image2.jpg";
 import image3 from "../../assets/users/image3.jpg";
 import image4 from "../../assets/users/image4.jpg";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { BsArrowUpRightCircle } from "react-icons/bs";
+import { MdArrowOutward } from "react-icons/md";
 
 const HomeContent = () => {
   const handleLogin = () => {
@@ -55,9 +55,12 @@ const HomeContent = () => {
           <p className="text-xl mt-4 text-center md:text-right">
             100+ users currently improving their code
           </p>
-          <button className="bg-black text-white w-full md:w-auto rounded-full px-10 py-3 text-xl mt-4 flex justify-center items-center" onClick={handleLogin}>
+          <button
+            className="bg-black text-white w-full md:w-auto rounded-full px-10 py-3 text-xl mt-4 flex justify-center items-center"
+            onClick={handleLogin}
+          >
             <h2>Try It Now</h2>
-            <BsArrowUpRightCircle className="ml-4" />
+            <MdArrowOutward className="ml-1 size-6" />
           </button>
         </div>
       </div>

@@ -1,12 +1,16 @@
-import { useLocation } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import { useLocation, useNavigate } from "react-router-dom";
+import { MdArrowBackIosNew } from "react-icons/md";
 import { useEffect, useState } from "react";
 
 const CodeReviewResponse = () => {
   const location = useLocation();
   const review = location.state?.review; // Access the review data
   const [formattedReviews, setFormattedReviews] = useState([]);
+  const navigate = useNavigate();
 
+  const goBackFunc = () => {
+    navigate("/home");
+  };
   // Clean the review text by removing *, **, and # and formatting it
   useEffect(() => {
     if (review?.reviews) {
@@ -29,34 +33,33 @@ const CodeReviewResponse = () => {
   };
 
   return (
-    <div className=" min-h-screen">
-      <Navbar />
-      <div className="mt-10 px-10 lg:px-40 py-10">
-        {formattedReviews.length ? (
-          <div>
-            <h2 className="text-3xl mb-8">
-              Code Review
-            </h2>
-            {formattedReviews.map((item, index) => (
-              <div
-                key={index}
-                className="rounded-lg p- mb-6"
-              >
-                <h3 className="text-xl font-semibold text-blue-600 mb-4">
-                  {item.fileName}
-                </h3>
-                <pre className="whitespace-pre-wrap text-gray-700 text-lg leading-relaxed">
-                  {item.review}
-                </pre>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-gray-600 text-xl">
-            No review data available.
-          </p>
-        )}
-      </div>
+    <div className="w-auto mt-10 px-10 lg:px-40 py-10">
+      <button
+        className="text-xl mb-20 flex justify-center items-center"
+        onClick={goBackFunc}
+      >
+        <MdArrowBackIosNew className="mr-2 size-4" />
+        <h2>Go Back</h2>
+      </button>
+      {formattedReviews.length ? (
+        <div className="w-full">
+          <h2 className="text-3xl mb-8">Code Review</h2>
+          {formattedReviews.map((item, index) => (
+            <div key={index} className="rounded-lg p- mb-6">
+              <h3 className="text-xl font-semibold text-blue-600 mb-4">
+                {item.fileName}
+              </h3>
+              <pre className="whitespace-pre-wrap text-gray-700 text-lg leading-relaxed">
+                {item.review}
+              </pre>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-600 text-xl">
+          No review data available.
+        </p>
+      )}
     </div>
   );
 };
