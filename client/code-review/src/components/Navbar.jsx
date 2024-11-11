@@ -4,7 +4,7 @@ const Navbar = () => {
     window.location.href = `/`;
   };
   return (
-    <div className="w-full sticky top-0 bg-white z-50 px-[2px] md:px-40">
+    <div className="w-full sticky top-0 bg-white z-50 px-6 md:px-40 shadow-md">
       <div className="flex justify-between items-center py-4">
         <img src={logo} alt="Logo" className="h-6" />
         <button

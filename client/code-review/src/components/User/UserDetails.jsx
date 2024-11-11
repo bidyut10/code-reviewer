@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const UserDetails = ({ user, events, repos }) => {
   return (
-    <div className="mb-">
+    <div className="">
       {user ? <UserProfile user={user} /> : <p>Loading user profile...</p>}
       <RecentRepositories repos={repos} />
       <RecentActivities events={events} />

@@ -33,7 +33,6 @@ const useRepoActions = () => {
           }/api/github/repos/${selectedRepo}/commits/${commitSha}`,
           { withCredentials: true }
         );
-        console.log("Code review:", reviewResponse.data);
 
         // Redirect to /response and pass the review data via state
         navigate("/response", { state: { review: reviewResponse.data } });

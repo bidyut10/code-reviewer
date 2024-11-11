@@ -35,12 +35,12 @@ const RepoCommits = ({
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center justify-end gap-4">
+                <div className="flex flex-col md:flex-row mt-4 md:mt-0 items-center justify-end gap-4">
                   <a
                     href={commit.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-3xl bg-[#c1ff72]"
+                    className="px-4 py-2 rounded-3xl text-center bg-[#c1ff72] w-full md:w-auto"
                   >
                     View on Github
                   </a>
@@ -48,7 +48,7 @@ const RepoCommits = ({
                     onClick={() =>
                       handleStartCodeReview(selectedRepoName, commit.sha)
                     }
-                    className="px-4 py-2 rounded-3xl bg-gray-950 text-white"
+                    className="px-4 py-2 rounded-3xl bg-gray-950 text-white w-full md:w-auto"
                   >
                     Code Review
                   </button>

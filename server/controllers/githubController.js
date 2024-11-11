@@ -63,7 +63,6 @@ const sanitizeReviews = (reviews) => {
 };
 
 exports.getCommitFiles = async (req, res) => {
-  console.log('working');
 
   if (!req.isAuthenticated()) {
     return res.status(401).json({ message: 'Unauthorized' });
@@ -88,7 +87,6 @@ exports.getCommitFiles = async (req, res) => {
     // Sanitize reviews before sending them back
     const sanitizedReviews = sanitizeReviews(reviews);
     
-    console.log(sanitizedReviews);
     // Send sanitized reviews back in response
     res.json({ reviews: sanitizedReviews });
   } catch (error) {
