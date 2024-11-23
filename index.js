@@ -3,12 +3,12 @@ const passport = require('passport');
 const session = require('express-session');
 const cors = require('cors');
 require('dotenv').config();
-const authRoutes = require('./backend/routes/authRoutes');
-const githubRoutes = require('./backend/routes/githubRoutes');
-const connectDB = require('./backend/db/dbConfig');
+const authRoutes = require('./routes/authRoutes.js');
+const githubRoutes = require('./routes/githubRoutes.js');
+const connectDB = require('./db/dbConfig.js');
 const path =require('path')
 // Passport config
-require('./backend/middleware/authMiddleware');
+require('./middleware/authMiddleware.js');
 
 const app = express();
 
@@ -36,11 +36,11 @@ app.use('/auth', authRoutes);
 app.use('/api/github', githubRoutes);
 
 // Serve static files
-app.use(express.static(path.join(__dirname, "../client/dist")));
+app.use(express.static(path.join(__dirname, "./client/dist")));
 
 // Fallback for SPA
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "./client", "dist", "index.html"));
 });
 
 // Start the server
