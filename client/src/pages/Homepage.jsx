@@ -1,5 +1,5 @@
 import HomeAbout from "../components/Home/HomeAbout";
-import HomeContent from "../components/Home/Homecontent";
+import HomeContent from "../components/Home/HomeContent";
 // import HomeCustomerSupport from "../components/Home/HomeCustomerSupport";
 import HomeFeature from "../components/Home/HomeFeature";
 import HomeFooter from "../components/Home/HomeFooter";
