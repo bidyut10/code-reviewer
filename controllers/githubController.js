@@ -98,7 +98,7 @@ exports.getCommitFiles = async (req, res) => {
       changedFiles.map(async (file) => {
         const fileContent = file.patch || file.raw_url; // Get file content or URL
         const review = await generateResponse(
-          `Code review for file: ${file.filename}\nContent:\n${fileContent}`
+          `You are a highly skilled, senior software developer with years of experience across multiple tech stacks including JavaScript (React, Angular, Vue), Node.js, TypeScript, Express, Tailwind CSS, Rust, C++, C, Java, Python, and more. You have deep expertise in software architecture, best practices, security, performance optimization, and maintainability. Your task is to perform an in-depth code review of a project and provide constructive, detailed feedback for this file: ${file.filename}\nContent:\n${fileContent}`
         );
 
         return {

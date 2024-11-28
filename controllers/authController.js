@@ -1,14 +1,11 @@
-exports.githubCallback = (req, res) => {
-    // Ensure Passport handled authentication successfully
-    if (!req.user) {
-        return res.status(401).json({ success: false, message: 'Authentication failed' });
-    }
-    const user = req.user;
-    res.redirect(`${process.env.FRONTEND_URL}/home?id=${user._id}`);
-};
-
 exports.logout = (req, res) => {
-    req.logout(() => {
-        res.redirect(`${process.env.FRONTEND_URL}`);
+    req.logout((err) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: 'Logout failed', error: err });
+        }
+        req.session.destroy(() => {
+            res.clearCookie('connect.sid'); 
+            return res.status(200).json({ success: true, message: 'Logout successful' });
+        });
     });
 };

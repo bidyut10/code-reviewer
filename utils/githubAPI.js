@@ -42,10 +42,13 @@ exports.fetchCommitFiles = async (accessToken, username, repo, sha) => {
     // Filter files according to patterns
     let changedFiles = response.data.files;
     const ignoredPatterns = [
-        'node_modules/', '.gitignore', 'package-lock.json', 'yarn.lock', '.env',
-        '__tests__/', '__mocks__/', 'coverage/', 'dist/', 'build/', '.DS_Store',
-        '.vscode/', '*.log', '*.lock', '*.tmp', '*.md'
+        'node_modules/', '.git/', '.gitignore', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', '.env', '.env.*',
+        'coverage/', 'dist/', 'build/', 'out/', 'tmp/', 'logs/', 'debug/', 'reports/', 'docs/', '.DS_Store', '.vscode/',
+        '.idea/', '*.log', '*.lock', '*.tmp', '*.bak', '*.tsbuildinfo', '*.cache', '*.md', 'LICENSE', 'README.md',
+        'CHANGELOG.md', '.editorconfig', '.eslintignore', '.prettierrc*', '.stylelintrc*', '.babelrc', '.dockerignore',
+        '.npmrc', '.nvmrc', '.envrc', 'Dockerfile*', 'docker-compose.yml', '.circleci/', '.github/', 'CNAME'
     ];
+
 
     changedFiles = changedFiles.filter(file => {
         return !ignoredPatterns.some(pattern => {

@@ -6,6 +6,7 @@ import ConfirmDisconnectModal from "./ConfirmDisconnectModal";
 import "../../App.css";
 import useRepoActions from "../../utils/useRepoActions";
 import useGitHubData from "../../utils/useGitHubData";
+import FullScreenLoader from "../FullScreenLoader";
 
 const RepoSelector = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,6 +18,7 @@ const RepoSelector = () => {
     handleConnectRepo,
     handleStartCodeReview,
     confirmDisconnectRepo,
+    loading
   } = useRepoActions();
   const { repos } = useGitHubData();
   const [selectedRepo, setSelectedRepo] = useState("");
@@ -55,6 +57,7 @@ const RepoSelector = () => {
 
   return (
     <div className="repo-selector w-full md:w-[700px]" ref={dropdownRef}>
+      <FullScreenLoader loading={loading} />
       <RepoDropdown
         repos={repos}
         searchTerm={searchTerm}
@@ -78,7 +81,7 @@ const RepoSelector = () => {
         <div className="flex space-x-4 mb-4">
           <button
             onClick={() => setModalVisible(true)}
-            className="bg-[#c1ff72] px-4 py-2 rounded hover:bg-[#b2ea69] flex-1"
+            className="font-normal hover:bg-[#a7ff33] bg-[#c1ff72] text-black -colors duration-1000 ease-in-out px-4 py-2 rounded flex-1"
           >
             Disconnect Repository
           </button>
