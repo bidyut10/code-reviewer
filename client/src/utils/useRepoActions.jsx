@@ -6,8 +6,10 @@ const useRepoActions = () => {
   const [commits, setCommits] = useState([]);
   const [connectedRepo, setConnectedRepo] = useState(null); // Null by default
   const navigate = useNavigate(); // Add useNavigate for redirection
+  const [loading, setLoading] = useState(false);
 
   const handleConnectRepo = async (selectedRepo) => {
+    setLoading(true);
     if (selectedRepo) {
       try {
         const commitsResponse = await axios.get(
@@ -20,12 +22,15 @@ const useRepoActions = () => {
         setConnectedRepo(selectedRepo); // Set the connected repo
       } catch (error) {
         console.error("Failed to fetch commits", error);
+      } finally {
+        setLoading(false);
       }
     }
   };
 
   const handleStartCodeReview = async (selectedRepo, commitSha) => {
     if (selectedRepo && commitSha) {
+    setLoading(true);
       try {
         const reviewResponse = await axios.get(
           `${
@@ -38,6 +43,8 @@ const useRepoActions = () => {
         navigate("/response", { state: { review: reviewResponse.data } });
       } catch (error) {
         console.error("Failed to fetch code review", error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -61,6 +68,7 @@ const useRepoActions = () => {
     handleStartCodeReview,
     handleDisconnectRepo,
     confirmDisconnectRepo,
+    loading,
   };
 };
 
