@@ -4,7 +4,7 @@ const ConfirmDisconnectModal = ({ confirmDisconnectRepo }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center transition-opacity duration-300">
       <div className="bg-white px-6 py-16 rounded-lg shadow-xl max-w-md w-full transform scale-95 transition-transform duration-300">
-        <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+        <h3 className="text-2xl font-normal text-gray-800 mb-6 text-center">
           Disconnect Repository
         </h3>
         <p className="mb-6 text-center text-xl">
@@ -19,7 +19,7 @@ const ConfirmDisconnectModal = ({ confirmDisconnectRepo }) => {
           </button>
           <button
             onClick={() => confirmDisconnectRepo(false)}
-            className="hover:bg-[#a7ff33] bg-[#c1ff72] text-black px-8 py-2 rounded-lg text-xl shadow-md transition-colors duration-200"
+            className="hover:bg-purple-500 bg-purple-400 text-black px-8 py-2 rounded-lg text-xl shadow-md transition-colors duration-200"
           >
             Cancel
           </button>

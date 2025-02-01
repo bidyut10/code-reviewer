@@ -81,7 +81,7 @@ const RepoSelector = () => {
         <div className="flex space-x-4 mb-4">
           <button
             onClick={() => setModalVisible(true)}
-            className="font-normal hover:bg-[#a7ff33] bg-[#c1ff72] text-black -colors duration-1000 ease-in-out px-4 py-2 rounded flex-1"
+            className="font-normal hover:bg-purple-500 bg-purple-400 text-black -colors duration-1000 ease-in-out px-4 py-2 rounded flex-1"
           >
             Disconnect Repository
           </button>

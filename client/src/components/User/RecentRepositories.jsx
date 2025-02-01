@@ -1,5 +1,5 @@
-import { IoLogoGithub } from "react-icons/io"; // GitHub Icons
 import PropTypes from "prop-types";
+import { Github } from "lucide-react";
 
 const RecentRepositories = ({ repos }) => {
   const sortedRepos = repos.sort(
@@ -8,12 +8,12 @@ const RecentRepositories = ({ repos }) => {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-2">Recent Repositories</h2>
+      <h2 className="text-lg font-normal mb-2">Recent Repositories</h2>
       <ul className="space-y-2 mb-12">
         {sortedRepos.slice(0, 3).map((repo) => (
           <li key={repo.id} className="flex justify-between items-center">
             <div className="flex items-center">
-              <IoLogoGithub className="text-gray-600 mr-2" />
+              <Github className="text-gray-600 mr-2" strokeWidth={1.5} />
               <span className="">{repo.name}</span>
             </div>
             <span className="text-sm text-gray-500">

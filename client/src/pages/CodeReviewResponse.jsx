@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { MdArrowBackIosNew } from "react-icons/md";
 import { useEffect, useState } from "react";
+import { ChevronLeft } from "lucide-react";
 
 const CodeReviewResponse = () => {
   const location = useLocation();
@@ -38,7 +38,7 @@ const CodeReviewResponse = () => {
         className="text-xl mb-20 flex justify-center items-center"
         onClick={goBackFunc}
       >
-        <MdArrowBackIosNew className="mr-2 size-4" />
+        <ChevronLeft className="mr-2 size-4" strokeWidth={1.5} />
         <h2>Go Back</h2>
       </button>
       {formattedReviews.length ? (
@@ -46,7 +46,7 @@ const CodeReviewResponse = () => {
           <h2 className="text-3xl mb-8">Code Review</h2>
           {formattedReviews.map((item, index) => (
             <div key={index} className="rounded-lg p- mb-6">
-              <h3 className="text-xl font-semibold text-blue-600 mb-4">
+              <h3 className="text-xl font-normal text-blue-600 mb-4">
                 {item.fileName}
               </h3>
               <pre className="whitespace-pre-wrap text-gray-700 text-lg leading-relaxed">

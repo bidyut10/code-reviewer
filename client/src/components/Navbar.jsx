@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import logo from "../assets/c.png";
+import logo from "../assets/cwl.png";
 import { useState } from "react";
-import { IoMdLogOut } from "react-icons/io";
 const Navbar = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -20,21 +19,15 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="w-full sticky top-0 bg-white z-50 px-6 md:px-40 shadow-md">
+    <div className="max-w-5xl sticky top-0 bg-white border-b border-gray-50 z-50 px-4 md:px-0">
       <div className="flex justify-between items-center py-4">
         <img src={logo} alt="Logo" className="h-6" />
         <button
-          className={`flex items-center gap-2 px-5 py-[6px] rounded-full text- font-normal
-            ${
-              loading
-                ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-                : "bg-[#1e1e1f] text-white hover:bg-[#000000]"
-            } -colors duration-700 ease-in-out`}
+          className="bg-black text-white px-4 py-2 rounded-lg hover:text-purple-50 flex justify-center items-center gap-2"
           onClick={handleLogout}
           disabled={loading}
         >
-          <IoMdLogOut />
-          <span>Log Out</span>
+          Log Out
         </button>
       </div>
     </div>

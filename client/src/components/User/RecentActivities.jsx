@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const RecentActivities = ({ events }) => {
   return (
     <div className="timeline">
-      <h2 className="text-lg font-semibold mb-4">Recent Activities</h2>
+      <h2 className="text-lg font-normal mb-4">Recent Activities</h2>
       {events.length > 0 ? (
         <ul className="space-y-4">
           {events.map((event, index) => (
@@ -13,7 +13,7 @@ const RecentActivities = ({ events }) => {
             >
               <div className="ml-4">
                 <div className="flex items-center space-x-2">
-                  <div className="h-2 w-2 bg-[#ace95e] rounded-full"></div>
+                  <div className="h-2 w-2 bg-purple-400 rounded-full"></div>
                   <p>{event.type}</p>
                 </div>
                 <div className="flex justify-between items-center gap-2">
