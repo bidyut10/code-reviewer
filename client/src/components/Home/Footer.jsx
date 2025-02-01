@@ -14,7 +14,7 @@ const Footer = () => {
   return (
     <footer className="w-full py-16">
       {showToast && (
-        <div className="absolute top-20 z-50 right-4 bg-purple-300 text-white px-4 py-2 rounded-lg shadow-lg transition-transform animate-fade-in-out">
+        <div className="absolute top-20 z-50 right-4 bg-green-300 text-white px-4 py-2 rounded-lg shadow-lg transition-transform animate-fade-in-out">
           Subscription Successful!
         </div>
       )}
@@ -32,21 +32,21 @@ const Footer = () => {
             <a
               href="https://x.com/BidyutKundu12"
               target="_blank"
-              className="text-purple-300 hover:text-black transition-transform transform hover:scale-110"
+              className="text-green-300 hover:text-black transition-transform transform hover:scale-110"
             >
               <Twitter />
             </a>
             <a
               href="https://github.com/bidyut10"
               target="_blank"
-              className="text-purple-300 hover:text-black transition-transform transform hover:scale-110"
+              className="text-green-300 hover:text-black transition-transform transform hover:scale-110"
             >
               <GithubIcon />
             </a>
             <a
               href="https://www.producthunt.com/products/codewise-ai"
               target="_blank"
-              className="text-purple-300 hover:text-black transition-transform transform hover:scale-110"
+              className="text-green-300 hover:text-black transition-transform transform hover:scale-110"
             >
               <Box />
             </a>
@@ -66,7 +66,7 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full p-2 rounded-xl bg-white border-2 border-purple-300 text-gray-800 focus:outline-none"
+              className="w-full p-2 rounded-xl bg-white border-2 border-green-300 text-gray-800 focus:outline-none"
             />
             <button
               className="mt-4 w-full flex justify-center items-center gap-3 bg-black text-white py-3 px-6 rounded-xl transition-all"

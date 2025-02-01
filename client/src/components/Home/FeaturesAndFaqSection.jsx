@@ -32,14 +32,14 @@ const FAQItem = ({ question, answer }) => {
   return (
     <div className="border-b border-gray-200 py-6">
       <div
-        className="flex justify-between items-center cursor-pointer transition-colors duration-300 hover:text-purple-500"
+        className="flex justify-between items-center cursor-pointer transition-colors duration-300 hover:text-green-500"
         onClick={() => setIsOpen(!isOpen)}
       >
         <h3 className="text-xl font-normal text-gray-800">{question}</h3>
         {isOpen ? (
-          <ChevronUp className="text-purple-300 transition-transform duration-300" />
+          <ChevronUp className="text-green-300 transition-transform duration-300" />
         ) : (
-          <ChevronDown className="text-purple-300 transition-transform duration-300" />
+          <ChevronDown className="text-green-300 transition-transform duration-300" />
         )}
       </div>
       <div
@@ -140,7 +140,7 @@ const FeaturesAndFaqSection = () => {
       ))}
       <div className="max-w-5xl mx-4 md:mx-0 py-16">
         <h2 className="text-3xl leading-relaxed text-center mb-12 text-gray-900">
-          Frequently Asked <span className="text-purple-300">Questions</span>
+          Frequently Asked <span className="text-green-300">Questions</span>
         </h2>
         {faqs.map((faq, index) => (
           <FAQItem key={index} question={faq.question} answer={faq.answer} />

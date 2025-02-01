@@ -53,7 +53,7 @@ const Testimonial = () => {
         {/* Header */}
         <div className="text-center space-y-4">
           <h2 className="text-3xl">
-            Trusted by <span className="text-purple-400">developers</span>{" "}
+            Trusted by <span className="text-green-400">developers</span>{" "}
             worldwide
           </h2>
           <p className="text-gray-600 max-w-2xl text-xl mx-auto">
@@ -66,7 +66,7 @@ const Testimonial = () => {
         <div className="relative">
           <div className="absolute -top-6 left-8">
             <Quote
-              className="w-12 h-12 bg-white text-purple-300"
+              className="w-12 h-12 bg-white text-green-300"
               strokeWidth={1.5}
             />
           </div>
@@ -79,7 +79,7 @@ const Testimonial = () => {
                   {[...Array(testimonials[activeIndex].rating)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-5 h-5 fill-purple-400 text-purple-400"
+                      className="w-5 h-5 fill-green-400 text-green-400"
                       strokeWidth={1.5}
                     />
                   ))}
@@ -112,7 +112,7 @@ const Testimonial = () => {
           <div className="absolute -bottom-6 right-8 flex space-x-2">
             <button
               onClick={prevTestimonial}
-              className="p-3 rounded-xl bg-white border border-gray-200 hover:border-purple-200 transition-colors"
+              className="p-3 rounded-xl bg-white border border-gray-200 hover:border-green-200 transition-colors"
             >
               <ChevronLeft
                 className="w-5 h-5 text-gray-600"
@@ -121,7 +121,7 @@ const Testimonial = () => {
             </button>
             <button
               onClick={nextTestimonial}
-              className="p-3 rounded-xl bg-white border border-gray-200 hover:border-purple-200 transition-colors"
+              className="p-3 rounded-xl bg-white border border-gray-200 hover:border-green-200 transition-colors"
             >
               <ChevronRight
                 className="w-5 h-5 text-gray-600"
@@ -138,7 +138,7 @@ const Testimonial = () => {
               key={idx}
               onClick={() => setActiveIndex(idx)}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                idx === activeIndex ? "bg-purple-400 w-8" : "bg-gray-300"
+                idx === activeIndex ? "bg-green-400 w-8" : "bg-gray-300"
               }`}
             />
           ))}
@@ -146,7 +146,7 @@ const Testimonial = () => {
         <div className="flex justify-end items-end">
           <button
             onClick={scrollToTop}
-            className={` bg-black hover:bg-purple-400 text-white p-4 rounded-full shadow-md transition-all duration-300 transform group translate-y-0 opacity-100
+            className={` bg-black hover:bg-green-400 text-white p-4 rounded-full shadow-md transition-all duration-300 transform group translate-y-0 opacity-100
         `}
             aria-label="Scroll to top"
           >

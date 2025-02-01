@@ -23,7 +23,7 @@ const Navbar = () => {
       <div className="flex justify-between items-center py-4">
         <img src={logo} alt="Logo" className="h-6" />
         <button
-          className="bg-black text-white px-4 py-2 rounded-lg hover:text-purple-50 flex justify-center items-center gap-2"
+          className="bg-black text-white px-4 py-2 rounded-lg hover:text-green-50 flex justify-center items-center gap-2"
           onClick={handleLogout}
           disabled={loading}
         >
