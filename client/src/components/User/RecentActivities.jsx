@@ -11,14 +11,14 @@ const RecentActivities = ({ events }) => {
               key={index}
               className="relative pl-6 before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-gray-100"
             >
-              <div className="ml-4">
+              <div className="ml-2">
                 <div className="flex items-center space-x-2">
                   <div className="h-2 w-2 bg-purple-300 rounded-full"></div>
-                  <p>{event.type}</p>
+                  <p className="text-sm">{event.type}</p>
                 </div>
                 <div className="flex justify-between items-center gap-2">
-                  <p className="text-sm text-gray-600">{event.repo.name}</p>
-                  <p className="text-sm text-gray-600 text-end">
+                  <p className="text-xs text-gray-600">{event.repo.name}</p>
+                  <p className="text-xs text-gray-600 text-end">
                     {new Date(event.created_at).toLocaleString()}
                   </p>
                 </div>
