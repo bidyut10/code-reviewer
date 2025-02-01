@@ -15,12 +15,12 @@ const RecentRepositories = ({ repos }) => {
             <div className="flex items-center">
               <Github
                 className="text-gray-600 mr-2"
-                size={16}
+                size={14}
                 strokeWidth={1.3}
               />
-              <span className="">{repo.name}</span>
+              <span className="text-sm">{repo.name}</span>
             </div>
-            <span className="text-sm text-gray-500">
+            <span className="text-xs text-gray-500">
               {new Date(repo.created_at).toLocaleString()}
             </span>
           </li>

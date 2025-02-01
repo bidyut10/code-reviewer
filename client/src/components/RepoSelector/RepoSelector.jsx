@@ -56,7 +56,7 @@ const RepoSelector = () => {
   };
 
   return (
-    <div className="repo-selector w-full md:w-[700px]" ref={dropdownRef}>
+    <div className="repo-selector w-full max-w-2xl" ref={dropdownRef}>
       <FullScreenLoader loading={loading} />
       <RepoDropdown
         repos={repos}
