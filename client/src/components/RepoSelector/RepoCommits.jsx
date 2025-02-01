@@ -43,7 +43,7 @@ const RepoCommits = ({
                     </span>
                   </div>
                 </div>
-                <div className="flex flex-col md:flex-row mt-6 md:mt-0 items-center justify-end gap-4">
+                <div className="flex flex-row mt-6 md:mt-0 items-center justify-between gap-4">
                   <a
                     href={commit.html_url}
                     target="_blank"

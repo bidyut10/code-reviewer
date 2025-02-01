@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const ConfirmDisconnectModal = ({ confirmDisconnectRepo }) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center transition-opacity duration-300">
+    <div className="fixed inset-0 top-0 z-50 bg-black bg-opacity-50 flex justify-center items-center transition-opacity duration-300">
       <div className="bg-white px-6 py-16 rounded-lg shadow-xl max-w-md w-full transform scale-95 transition-transform duration-300">
         <h3 className="text-2xl font-normal text-gray-800 mb-6 text-center">
           Disconnect Repository
