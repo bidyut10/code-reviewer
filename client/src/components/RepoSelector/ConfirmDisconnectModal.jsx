@@ -19,7 +19,7 @@ const ConfirmDisconnectModal = ({ confirmDisconnectRepo }) => {
           </button>
           <button
             onClick={() => confirmDisconnectRepo(false)}
-            className="hover:bg-purple-500 bg-purple-400 text-black px-8 py-2 rounded-lg text-xl shadow-md transition-colors duration-200"
+            className="hover:bg-purple-400 bg-purple-300 text-black px-8 py-2 rounded-lg text-xl shadow-md transition-colors duration-200"
           >
             Cancel
           </button>

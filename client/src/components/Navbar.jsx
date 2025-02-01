@@ -19,7 +19,7 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="max-w-5xl sticky top-0 bg-white border-b border-gray-50 z-50 px-4 md:px-0">
+    <div className="w-full max-w-5xl sticky top-0 bg-white border-b border-gray-50 z-50">
       <div className="flex justify-between items-center py-4">
         <img src={logo} alt="Logo" className="h-6" />
         <button

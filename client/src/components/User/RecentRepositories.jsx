@@ -13,7 +13,11 @@ const RecentRepositories = ({ repos }) => {
         {sortedRepos.slice(0, 3).map((repo) => (
           <li key={repo.id} className="flex justify-between items-center">
             <div className="flex items-center">
-              <Github className="text-gray-600 mr-2" strokeWidth={1.5} />
+              <Github
+                className="text-gray-600 mr-2"
+                size={16}
+                strokeWidth={1.3}
+              />
               <span className="">{repo.name}</span>
             </div>
             <span className="text-sm text-gray-500">
