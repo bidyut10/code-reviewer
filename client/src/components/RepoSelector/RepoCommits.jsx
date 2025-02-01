@@ -43,12 +43,12 @@ const RepoCommits = ({
                     </span>
                   </div>
                 </div>
-                <div className="flex flex-row mt-6 md:mt-0 items-center justify-between gap-4">
+                <div className="flex flex-row mt-6 md:mt-2 items-center justify-end gap-4">
                   <a
                     href={commit.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 pl-4 pr-3 py-3 rounded-xl font-normal hover:bg-purple-400 bg-purple-300 text-[#1e1c1e] -colors duration-1000 ease-in-out w-full md:w-auto"
+                    className="flex items-center gap-2 pl-4 pr-3 py-2.5 rounded-xl font-normal hover:bg-purple-400 bg-purple-300 text-[#1e1c1e] -colors duration-1000 ease-in-out w-full md:w-auto"
                   >
                     <span>View on Github</span>
                     <Github
@@ -61,7 +61,7 @@ const RepoCommits = ({
                     onClick={() =>
                       handleStartCodeReview(selectedRepoName, commit.sha)
                     }
-                    className="flex items-center gap-2 pl-4 pr-3 py-3 rounded-xl font-normal bg-[#1e1d1d] text-white hover:bg-[#000000] duration-1000 ease-in-out w-full md:w-auto group"
+                    className="flex items-center gap-2 pl-4 pr-3 py-2.5 rounded-xl font-normal bg-[#1e1d1d] text-white hover:bg-[#000000] duration-1000 ease-in-out w-full md:w-auto group"
                   >
                     <span>Code Review</span>
                     <Sparkles
