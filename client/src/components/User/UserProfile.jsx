@@ -9,7 +9,7 @@ const UserProfile = ({ user }) => {
         className="w-16 h-16 rounded-full border-4 border-gray-50"
       />
       <div>
-        <h3 className="text-2xl font-semibold uppercase">{user.name}</h3>
+        <h3 className="text-2xl font-normal uppercase">{user.name}</h3>
         <p className="text-gray-500 mt-2">{user.bio}</p>
       </div>
     </div>

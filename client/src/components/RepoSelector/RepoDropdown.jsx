@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiSearch } from "react-icons/fi";
-import { IoMdClose } from "react-icons/io";
+import {Search, X } from "lucide-react";
 import PropTypes from "prop-types";
 
 const RepoDropdown = ({
@@ -45,7 +44,7 @@ const RepoDropdown = ({
   return (
     <div className="relative mb-4" id="repo-dropdown">
       <div className="flex items-center border border-gray-950 rounded relative">
-        <FiSearch className="ml-4 " />
+        <Search className="ml-4" strokeWidth={1.5} />
         <input
           type="text"
           placeholder="Search or select a repository..."
@@ -57,9 +56,10 @@ const RepoDropdown = ({
           className="border-0 p-2 rounded-l w-full focus:outline-none"
         />
         {selectedRepo && (
-          <IoMdClose
+          <X
             className=" cursor-pointer mr-2"
             onClick={clearSelection}
+            strokeWidth={1.5}
           />
         )}
       </div>

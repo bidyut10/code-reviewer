@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import logo from "../assets/c.png";
+import logo from "../assets/cwl.png";
 
 const FullScreenLoader = ({ loading }) => {
   if (!loading) return null;
@@ -9,7 +9,7 @@ const FullScreenLoader = ({ loading }) => {
         <img
           src={logo}
           alt="Loading..."
-          className="h-20 md:32 animate-pulse"
+          className="w-20 md:w-32 animate-pulse"
         />
     </div>
   );
