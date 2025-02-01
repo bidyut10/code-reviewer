@@ -2,15 +2,15 @@ import PropTypes from "prop-types";
 
 const UserProfile = ({ user }) => {
   return (
-    <div className="flex items-center space-x-4 mb-8">
+    <div className="flex space-x-4 mb-8">
       <img
         src={user.avatar_url}
         alt={`${user.login}'s avatar`}
-        className="w-16 h-16 rounded-2xl border-4 border-gray-50"
+        className="w-16 h-16 rounded-2xl border-2 border-gray-50"
       />
       <div>
-        <h3 className="text-xl font-normal uppercase">{user.name}</h3>
-        <p className="text-gray-500 mt-2">{user.bio}</p>
+        <h3 className="text-lg font-normal uppercase">{user.name}</h3>
+        <p className="text-gray-500 mt-1 text-sm">{user.bio}</p>
       </div>
     </div>
   );

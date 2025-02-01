@@ -53,7 +53,7 @@ const RepoDropdown = ({
             setSearchTerm(e.target.value);
           }}
           onFocus={toggleDropdown} // Open dropdown when focused
-          className="border-0 p-2 rounded-l w-full focus:outline-none"
+          className="border-0 p-3 rounded-xl w-full focus:outline-none"
         />
         {selectedRepo && (
           <X
