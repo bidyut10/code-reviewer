@@ -36,7 +36,7 @@ const Features = () => {
             </div>
             <div className="bg-white border border-gray-200 p-6 rounded-3xl flex flex-col justify-between">
               <Award
-                className="w-10 h-10 text-purple-500 mb-4"
+                className="w-10 h-10 text-purple-300 mb-4"
                 strokeWidth={0.8}
               />
               <h4 className="text-xl">Reports</h4>
@@ -46,7 +46,7 @@ const Features = () => {
             </div>
           </div>
           <div className="col-span-2 bg-white border border-gray-200 p-6 rounded-3xl flex items-center space-x-6">
-            <Gauge className="w-12 h-12 text-purple-500" strokeWidth={1} />
+            <Gauge className="w-12 h-12 text-purple-300" strokeWidth={1} />
             <div>
               <h4 className="text-xl mb-2">Performance Tracking</h4>
               <p className="text-gray-600 text-base">

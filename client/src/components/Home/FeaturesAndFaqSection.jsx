@@ -140,7 +140,7 @@ const FeaturesAndFaqSection = () => {
       ))}
       <div className="max-w-5xl mx-4 md:mx-0 py-16">
         <h2 className="text-3xl leading-relaxed text-center mb-12 text-gray-900">
-          Frequently Asked <span className="text-purple-400">Questions</span>
+          Frequently Asked <span className="text-purple-300">Questions</span>
         </h2>
         {faqs.map((faq, index) => (
           <FAQItem key={index} question={faq.question} answer={faq.answer} />

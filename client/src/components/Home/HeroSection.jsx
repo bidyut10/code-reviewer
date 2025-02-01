@@ -35,7 +35,7 @@ const HeroSection = () => {
           <div className="mr-0 md:mr-4 mb-8 top-0 space-y-6">
             <h1 className="text-3xl font-normal leading-loose text-center md:text-start">
               Get instant{" "}
-              <span className="text-purple-400 leading-loose">
+              <span className="text-purple-300 leading-loose">
                 AI-powered <br /> code reviews
               </span>{" "}
               for every GitHub commit
@@ -75,9 +75,10 @@ const HeroSection = () => {
             <video
               src={vd}
               className="aspect-video w-full rounded-xl"
-              autoPlay="autoPlay"
-              loop="true"
-              muted="true"
+              autoPlay
+              loop
+              muted
+              playsInline
             ></video>
           </div>
         </div>
@@ -90,7 +91,7 @@ const HeroSection = () => {
             <div className="space-y-8">
               <div className="flex justify-start items-center gap-3">
                 <div className="p-2 bg-purple-50 rounded-lg">
-                  <Github className="text-purple-400" size={20} />
+                  <Github className="text-purple-300" size={20} />
                 </div>
                 <div>
                   <p className="font-normal">1. Connect GitHub</p>
@@ -101,7 +102,7 @@ const HeroSection = () => {
               </div>
               <div className="flex justify-start items-center gap-3">
                 <div className="p-2 bg-purple-50 rounded-lg">
-                  <Search className="text-purple-400" size={20} />
+                  <Search className="text-purple-300" size={20} />
                 </div>
                 <div>
                   <p className="font-normal">2. Select Repository</p>
@@ -112,7 +113,7 @@ const HeroSection = () => {
               </div>
               <div className="flex justify-start items-center gap-3">
                 <div className="p-2 bg-purple-50 rounded-lg">
-                  <Dock className="text-purple-400" size={20} />
+                  <Dock className="text-purple-300" size={20} />
                 </div>
                 <div>
                   <p className="font-normal">3. Get Reviews</p>
@@ -153,15 +154,15 @@ const HeroSection = () => {
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-gray-600">Reviews Completed</span>
-                <span className="text-purple-400 font-normal">1K+</span>
+                <span className="text-purple-300 font-normal">1K+</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-600">Issues Found</span>
-                <span className="text-purple-400 font-normal">5K+</span>
+                <span className="text-purple-300 font-normal">5K+</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-600">Active Repositories</span>
-                <span className="text-purple-400 font-normal">100+</span>
+                <span className="text-purple-300 font-normal">100+</span>
               </div>
             </div>
           </div>
@@ -169,29 +170,29 @@ const HeroSection = () => {
 
         {/* Feature Grid - Bottom Section */}
         <div className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-          <div className="border border-gray-200 rounded-2xl p-6 hover:border-purple-400 transition-all duration-300">
+          <div className="border border-gray-200 rounded-2xl p-6 hover:border-purple-300 transition-all duration-300">
             <Terminal
-              className="w-8 h-8 text-purple-400 mb-4"
+              className="w-8 h-8 text-purple-300 mb-4"
               strokeWidth={1}
             />
             <h3 className="text-lg font-normal mb-2">Code Analysis</h3>
             <p className="text-gray-600">In-depth review of each commit</p>
           </div>
 
-          <div className="border border-gray-200 rounded-2xl p-6 hover:border-purple-400 transition-all duration-300">
-            <Clock className="w-8 h-8 text-purple-400 mb-4" strokeWidth={1} />
+          <div className="border border-gray-200 rounded-2xl p-6 hover:border-purple-300 transition-all duration-300">
+            <Clock className="w-8 h-8 text-purple-300 mb-4" strokeWidth={1} />
             <h3 className="text-lg font-normal mb-2">Instant Feedback</h3>
             <p className="text-gray-600">Real-time review on commits</p>
           </div>
 
-          <div className="border border-gray-200 rounded-2xl p-6 hover:border-purple-400 transition-all duration-300">
-            <Bug className="w-8 h-8 text-purple-400 mb-4" strokeWidth={1} />
+          <div className="border border-gray-200 rounded-2xl p-6 hover:border-purple-300 transition-all duration-300">
+            <Bug className="w-8 h-8 text-purple-300 mb-4" strokeWidth={1} />
             <h3 className="text-lg font-normal mb-2">Issue Detection</h3>
             <p className="text-gray-600">Find and fix code problems</p>
           </div>
 
-          <div className="border border-gray-200 rounded-2xl p-6 hover:border-purple-400 transition-all duration-300">
-            <Code2 className="w-8 h-8 text-purple-400 mb-4" strokeWidth={1} />
+          <div className="border border-gray-200 rounded-2xl p-6 hover:border-purple-300 transition-all duration-300">
+            <Code2 className="w-8 h-8 text-purple-300 mb-4" strokeWidth={1} />
             <h3 className="text-lg font-normal mb-2">Best Practices</h3>
             <p className="text-gray-600">Suggestions for improvement</p>
           </div>
