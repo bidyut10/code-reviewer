@@ -13,13 +13,13 @@ const ConfirmDisconnectModal = ({ confirmDisconnectRepo }) => {
         <div className="flex justify-center space-x-4">
           <button
             onClick={() => confirmDisconnectRepo(true)}
-            className="bg-[#1e1d1d] text-white px-8 py-2 rounded-lg text-xl hover:bg-black shadow-md transition-colors duration-200"
+            className="bg-[#1e1d1d] text-white px-8 py-3 rounded-lg text-xl hover:bg-black transition-colors duration-200"
           >
             Confirm
           </button>
           <button
             onClick={() => confirmDisconnectRepo(false)}
-            className="hover:bg-purple-400 bg-purple-300 text-black px-8 py-2 rounded-lg text-xl shadow-md transition-colors duration-200"
+            className="hover:bg-purple-400 bg-purple-300 text-black px-8 py-3 rounded-lg text-xl transition-colors duration-200"
           >
             Cancel
           </button>
