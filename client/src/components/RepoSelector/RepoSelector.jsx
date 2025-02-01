@@ -72,7 +72,7 @@ const RepoSelector = () => {
         selectedRepo && (
           <button
             onClick={handleRepoConnect}
-            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-950 w-full mb-2"
+            className="bg-black text-white px-4 py-3 rounded hover:bg-[#1e1d1d] w-full mb-2"
           >
             Connect Repository
           </button>

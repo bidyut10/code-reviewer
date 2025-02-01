@@ -65,7 +65,10 @@ const Testimonial = () => {
         {/* Main Testimonial Card */}
         <div className="relative">
           <div className="absolute -top-6 left-8">
-            <Quote className="w-12 h-12 text-purple-300" strokeWidth={1.5} />
+            <Quote
+              className="w-12 h-12 bg-white text-purple-300"
+              strokeWidth={1.5}
+            />
           </div>
 
           <div className="border border-gray-200 rounded-2xl p-8 lg:p-12">
@@ -109,7 +112,7 @@ const Testimonial = () => {
           <div className="absolute -bottom-6 right-8 flex space-x-2">
             <button
               onClick={prevTestimonial}
-              className="p-3 rounded-xl border border-gray-200 hover:border-purple-200 transition-colors"
+              className="p-3 rounded-xl bg-white border border-gray-200 hover:border-purple-200 transition-colors"
             >
               <ChevronLeft
                 className="w-5 h-5 text-gray-600"
@@ -118,7 +121,7 @@ const Testimonial = () => {
             </button>
             <button
               onClick={nextTestimonial}
-              className="p-3 rounded-xl border border-gray-200 hover:border-purple-200 transition-colors"
+              className="p-3 rounded-xl bg-white border border-gray-200 hover:border-purple-200 transition-colors"
             >
               <ChevronRight
                 className="w-5 h-5 text-gray-600"
