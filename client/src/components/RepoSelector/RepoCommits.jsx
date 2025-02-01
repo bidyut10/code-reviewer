@@ -25,13 +25,18 @@ const RepoCommits = ({
                 <p className="text-lg">{commit.commit.message}</p>
                 <div className="flex items-center space-x-4 mt-2">
                   <div className="flex items-center space-x-2">
-                    <User className="text-sm text-gray-400" strokeWidth={1.5} />
+                    <User
+                      className="text-sm text-gray-400"
+                      strokeWidth={1.3}
+                      size={16}
+                    />
                     <span>{commit.commit.author.name}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Calendar
                       className="text-lg text-gray-400"
-                      strokeWidth={1.5}
+                      strokeWidth={1.3}
+                      size={16}
                     />
                     <span>
                       {new Date(commit.commit.author.date).toLocaleDateString()}
@@ -43,10 +48,14 @@ const RepoCommits = ({
                     href={commit.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 pl-4 pr-3 py-[6px] rounded-3xl font-normal hover:bg-purple-500 bg-purple-400 text-black -colors duration-1000 ease-in-out w-full md:w-auto"
+                    className="flex items-center gap-2 pl-4 pr-3 py-[6px] rounded-3xl font-normal hover:bg-purple-500 bg-purple-400 text-[#1e1c1e] -colors duration-1000 ease-in-out w-full md:w-auto"
                   >
                     <span>View on Github</span>
-                    <Github className="hover:animate-pulse" strokeWidth={1.5} />
+                    <Github
+                      className="hover:animate-pulse"
+                      size={16}
+                      strokeWidth={1.3}
+                    />
                   </a>
                   <button
                     onClick={() =>
@@ -57,7 +66,8 @@ const RepoCommits = ({
                     <span>Code Review</span>
                     <Sparkle
                       className="group-hover:animate-pulse"
-                      strokeWidth={1.5}
+                      size={16}
+                      strokeWidth={1.3}
                     />
                   </button>
                 </div>

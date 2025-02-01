@@ -13,7 +13,7 @@ const RecentActivities = ({ events }) => {
             >
               <div className="ml-4">
                 <div className="flex items-center space-x-2">
-                  <div className="h-2 w-2 bg-purple-400 rounded-full"></div>
+                  <div className="h-2 w-2 bg-purple-300 rounded-full"></div>
                   <p>{event.type}</p>
                 </div>
                 <div className="flex justify-between items-center gap-2">
