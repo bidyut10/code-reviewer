@@ -15,7 +15,7 @@ const RecentRepositories = ({ repos }) => {
             <div className="flex items-center">
               <Github
                 className="text-gray-600 mr-2"
-                size={14}
+                size={12}
                 strokeWidth={1.3}
               />
               <span className="text-sm">{repo.name}</span>
