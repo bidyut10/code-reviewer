@@ -1,86 +1,151 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import {
+  Box,
+  GithubIcon,
+  Twitter,
+  SendHorizonal,
+  Mail,
+  MapPin,
+  Heart,
+} from "lucide-react";
 import logo from "../../assets/cwl.png";
-import { Box, GithubIcon, SendHorizonal, Twitter } from "lucide-react";
-
+import admin from "../../assets/logo.webp";
 const Footer = () => {
   const [showToast, setShowToast] = useState(false);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000); 
+    setTimeout(() => setShowToast(false), 3000);
   };
+
   return (
     <footer className="w-full py-16">
       {showToast && (
-        <div className="absolute top-20 z-50 right-4 bg-green-300 text-white px-4 py-2 rounded-lg shadow-lg transition-transform animate-fade-in-out">
-          Subscription Successful!
+        <div className="fixed bottom-4 right-4 bg-black text-white px-6 py-3 rounded-xl shadow-lg transition-all duration-300 flex items-center gap-2">
+          <div className="w-2 h-2 bg-[#c1ff72] rounded-full"></div>
+          Thanks for subscribing!
         </div>
       )}
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div className="flex flex-col">
-          <img src={logo} alt="Company Logo" className="w-12 mb-4" />
-          <p className="text-lg text-gray-800">
-            Empowering developers with AI-driven tools to enhance productivity
-            and code quality.
-          </p>
-        </div>
-        <div>
-          <h3 className="text-lg font-normal mb-4 ">Follow Us</h3>
-          <div className="flex space-x-6">
-            <a
-              href="https://x.com/BidyutKundu12"
-              target="_blank"
-              className="text-green-300 hover:text-black transition-transform transform hover:scale-110"
-            >
-              <Twitter />
-            </a>
-            <a
-              href="https://github.com/bidyut10"
-              target="_blank"
-              className="text-green-300 hover:text-black transition-transform transform hover:scale-110"
-            >
-              <GithubIcon />
-            </a>
-            <a
-              href="https://www.producthunt.com/products/codewise-ai"
-              target="_blank"
-              className="text-green-300 hover:text-black transition-transform transform hover:scale-110"
-            >
-              <Box />
-            </a>
+
+      <div className="max-w-5xl mx-auto px-4">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+          {/* Company Info */}
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <img src={logo} alt="CodeWiseAI Logo" className="w-12" />
+              <p className="text-gray-600 max-w-md">
+                CodeWiseAI is revolutionizing code review processes with
+                AI-powered insights, helping developers write better code
+                through automated analysis and real-time feedback.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-normal">Created & Maintained by</h3>
+              <div className="flex items-center gap-3">
+                <img
+                  src={admin}
+                  alt="CodeWiseAI admin"
+                  className="w-10 h-10 rounded-full"
+                />
+
+                <div>
+                  <p className="font-medium">Bidyut Kundu</p>
+                  <p className="text-sm text-gray-600">Founder & Developer</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-gray-600">
+                <MapPin size={16} />
+                <span>India</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-600">
+                <Mail size={16} />
+                <span>bidyut34268@gamil.com</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Newsletter & Social */}
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <h3 className="font-normal">Stay Updated</h3>
+              <p className="text-gray-600">
+                Get the latest updates about features and improvements
+              </p>
+              <form onSubmit={handleSubscribe} className="space-y-3">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full p-3 rounded-xl border border-gray-200 text-gray-800 focus:outline-none focus:border-[#c1ff72] transition-colors"
+                />
+                <button
+                  className="w-full bg-black hover:bg-[#c1ff72] text-white py-3 px-6 rounded-xl transition-colors duration-300 flex items-center justify-center gap-2"
+                  type="submit"
+                >
+                  Subscribe
+                  <SendHorizonal size={16} />
+                </button>
+              </form>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-normal">Connect With Us</h3>
+              <div className="flex space-x-4">
+                <a
+                  href="https://x.com/BidyutKundu12"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg hover:bg-black transition-colors"
+                >
+                  <Twitter className="w-5 h-5 text-gray-600 hover:text-[#c1ff72]" />
+                </a>
+                <a
+                  href="https://github.com/bidyut10"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg hover:bg-black transition-colors"
+                >
+                  <GithubIcon className="w-5 h-5 text-gray-600 hover:text-[#c1ff72]" />
+                </a>
+                <a
+                  href="https://www.producthunt.com/products/codewise-ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg hover:bg-black transition-colors"
+                >
+                  <Box className="w-5 h-5 text-gray-600 hover:text-[#c1ff72]" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-        <div>
-          <h3 className="text-lg font-normal mb-4 ">Quick Links</h3>
-          <ul className="space-y-2">
-            <li>
-              <a className="text-gray-400 hover:text-black">Docs</a>
-            </li>
-          </ul>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-100 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-600">
+            <div>
+              &copy; {new Date().getFullYear()} CodeWiseAI. All rights reserved.
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[#c1ff72]">Founded 2024</span>
+              <span>•</span>
+              <span className="flex items-center gap-1">
+                Made with{" "}
+                <Heart size={14} className="text-[#c1ff72] fill-[#c1ff72]" /> in
+                India
+              </span>
+            </div>
+          </div>
         </div>
-        <div>
-          <h3 className="text-lg font-normal mb-4">Stay Connected</h3>
-          <form onSubmit={handleSubscribe}>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full p-2 rounded-xl bg-white border-2 border-green-300 text-gray-800 focus:outline-none"
-            />
-            <button
-              className="mt-4 w-full flex justify-center items-center gap-3 bg-black text-white py-3 px-6 rounded-xl transition-all"
-              type="submit"
-            >
-              Subscribe <SendHorizonal size={16} strokeWidth={1.5} />
-            </button>
-          </form>
-        </div>
-      </div>
-      <div className="mt-12 text-center text-sm text-gray-800 border-t border-gray-50 pt-4">
-        &copy; {new Date().getFullYear()} Codewise.ai. All Rights Reserved.
       </div>
     </footer>
   );
 };
+
 export default Footer;

@@ -20,7 +20,7 @@ const RepoCommits = ({
             {commits.map((commit, index) => (
               <li
                 key={index}
-                className="border border-gray-200 p-6 rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out hover:border-green-400 bg-white"
+                className="border border-gray-200 p-6 rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out hover:border-[#c1ff72] bg-white"
               >
                 <p className="text-sm">{commit.commit.message}</p>
                 <div className="flex items-center space-x-4 mt-2">
@@ -48,7 +48,7 @@ const RepoCommits = ({
                     href={commit.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 pl-4 pr-3 py-2.5 rounded-xl font-normal hover:bg-green-400 bg-green-300 text-[#1e1c1e] -colors duration-1000 ease-in-out w-full md:w-auto"
+                    className="flex items-center gap-2 pl-4 pr-3 py-2.5 rounded-xl font-normal hover:bg-[#c1ff72] bg-[#c1ff72] text-[#1e1c1e] -colors duration-1000 ease-in-out w-full md:w-auto"
                   >
                     <span>View on Github</span>
                     <Github

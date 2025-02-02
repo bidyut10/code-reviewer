@@ -6,6 +6,7 @@ import Features from "../components/Home/Features";
 import FeaturesAndFaqSection from "../components/Home/FeaturesAndFaqSection";
 import Testimonial from "../components/Home/Testimonial";
 import Footer from "../components/Home/Footer";
+import TokenInfo from "../components/Home/TokenInfo";
 
 const HomeNew = () => {
   return (
@@ -13,9 +14,10 @@ const HomeNew = () => {
       <HeroNavbar />
       <HeroSection />
       <Features />
+      <TokenInfo />
       <FeaturesAndFaqSection />
-      <Testimonial/>
-      <Footer/>
+      <Testimonial />
+      <Footer />
     </div>
   );
 };
