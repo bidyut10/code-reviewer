@@ -16,7 +16,7 @@ const FeatureItem = ({ Icon, title, description }) => (
   <div className="group border-b border-gray-100 last:border-b-0">
     <div className="py-8 space-y-4">
       <div className="flex items-start gap-6">
-        <Icon className="w-6 h-6 mt-1 text-[#c1ff72]" strokeWidth={1.5} />
+        <Icon className="w-6 h-6 mt-1 text-[#50D890]" strokeWidth={1.5} />
         <div className="space-y-2">
           <h3 className="text-lg font-medium">{title}</h3>
           <p className="text-gray-600 leading-relaxed">{description}</p>
@@ -37,7 +37,7 @@ const FAQItem = ({ question, answer }) => {
       <div className="py-6 space-y-4">
         <div className="flex justify-between items-center gap-4">
           <h3 className="text-lg font-normal">{question}</h3>
-          <div className="text-[#c1ff72]">
+          <div className="text-[#50D890]">
             {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </div>
         </div>

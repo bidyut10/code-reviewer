@@ -13,7 +13,7 @@ const CWNavbar = () => {
           <img src={logo} alt="logo" className="h-6" />
 
             <button
-              className="bg-black text-white px-6 py-2 rounded-lg hover:text-[#c1ff72] flex justify-center items-center gap-2"
+              className="bg-black text-white px-6 py-2 rounded-lg hover:bg-[#50D890] flex justify-center items-center gap-2"
               onClick={handleLogin}
             >
               Log In
