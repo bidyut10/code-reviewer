@@ -35,7 +35,7 @@ const HeroSection = () => {
           <div className="mr-0 md:mr-4 mb-8 top-0 space-y-6">
             <h1 className="text-3xl leading-loose text-center md:text-start">
               Get instant{" "}
-              <span className="text-[#c1ff72] leading-loose">
+              <span className="text-[#50D890] leading-loose">
                 AI-powered <br /> code reviews
               </span>{" "}
               for every GitHub commit
@@ -58,7 +58,7 @@ const HeroSection = () => {
               </button>
               <button
                 onClick={handleLogin}
-                className="group flex justify-center items-center w-full md:w-auto gap-2 bg-black text-white px-6 py-4 md:py-3 rounded-xl hover:bg-[#c1ff72] transition-all duration-300"
+                className="group flex justify-center items-center w-full md:w-auto gap-2 bg-black text-white px-6 py-4 md:py-3 rounded-xl hover:bg-[#50D890] transition-all duration-300"
               >
                 Try it out for free
                 <ArrowRight
@@ -91,7 +91,7 @@ const HeroSection = () => {
             <div className="space-y-8">
               <div className="flex justify-start items-center gap-3">
                 <div className="p-2 bg-[#c2ff720e] rounded-lg">
-                  <Github className="text-[#c1ff72]" size={20} />
+                  <Github className="text-[#50D890]" size={20} />
                 </div>
                 <div>
                   <p className="font-normal">1. Connect GitHub</p>
@@ -102,7 +102,7 @@ const HeroSection = () => {
               </div>
               <div className="flex justify-start items-center gap-3">
                 <div className="p-2 bg-[#c2ff720e] rounded-lg">
-                  <Search className="text-[#c1ff72]" size={20} />
+                  <Search className="text-[#50D890]" size={20} />
                 </div>
                 <div>
                   <p className="font-normal">2. Select Repository</p>
@@ -113,7 +113,7 @@ const HeroSection = () => {
               </div>
               <div className="flex justify-start items-center gap-3">
                 <div className="p-2 bg-[#c2ff720e] rounded-lg">
-                  <Dock className="text-[#c1ff72]" size={20} />
+                  <Dock className="text-[#50D890]" size={20} />
                 </div>
                 <div>
                   <p className="font-normal">3. Get Reviews</p>
@@ -154,15 +154,15 @@ const HeroSection = () => {
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-gray-600">Reviews Completed</span>
-                <span className="text-[#c1ff72] font-normal">1K+</span>
+                <span className="text-[#50D890] font-normal">1K+</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-600">Issues Found</span>
-                <span className="text-[#c1ff72] font-normal">5K+</span>
+                <span className="text-[#50D890] font-normal">5K+</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-600">Active Repositories</span>
-                <span className="text-[#c1ff72] font-normal">100+</span>
+                <span className="text-[#50D890] font-normal">100+</span>
               </div>
             </div>
           </div>
@@ -170,26 +170,26 @@ const HeroSection = () => {
 
         {/* Feature Grid - Bottom Section */}
         <div className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-          <div className="border border-gray-200 rounded-2xl p-6 hover:border-[#c1ff72] transition-all duration-300">
-            <Terminal className="w-8 h-8 text-[#c1ff72] mb-4" strokeWidth={1} />
+          <div className="border border-gray-200 rounded-2xl p-6 hover:border-[#50D890] transition-all duration-300">
+            <Terminal className="w-8 h-8 text-[#50D890] mb-4" strokeWidth={1} />
             <h3 className="text-lg font-normal mb-2">Code Analysis</h3>
             <p className="text-gray-600">In-depth review of each commit</p>
           </div>
 
-          <div className="border border-gray-200 rounded-2xl p-6 hover:border-[#c1ff72] transition-all duration-300">
-            <Clock className="w-8 h-8 text-[#c1ff72] mb-4" strokeWidth={1} />
+          <div className="border border-gray-200 rounded-2xl p-6 hover:border-[#50D890] transition-all duration-300">
+            <Clock className="w-8 h-8 text-[#50D890] mb-4" strokeWidth={1} />
             <h3 className="text-lg font-normal mb-2">Instant Feedback</h3>
             <p className="text-gray-600">Real-time review on commits</p>
           </div>
 
-          <div className="border border-gray-200 rounded-2xl p-6 hover:border-[#c1ff72] transition-all duration-300">
-            <Bug className="w-8 h-8 text-[#c1ff72] mb-4" strokeWidth={1} />
+          <div className="border border-gray-200 rounded-2xl p-6 hover:border-[#50D890] transition-all duration-300">
+            <Bug className="w-8 h-8 text-[#50D890] mb-4" strokeWidth={1} />
             <h3 className="text-lg font-normal mb-2">Issue Detection</h3>
             <p className="text-gray-600">Find and fix code problems</p>
           </div>
 
-          <div className="border border-gray-200 rounded-2xl p-6 hover:border-[#c1ff72] transition-all duration-300">
-            <Code2 className="w-8 h-8 text-[#c1ff72] mb-4" strokeWidth={1} />
+          <div className="border border-gray-200 rounded-2xl p-6 hover:border-[#50D890] transition-all duration-300">
+            <Code2 className="w-8 h-8 text-[#50D890] mb-4" strokeWidth={1} />
             <h3 className="text-lg font-normal mb-2">Best Practices</h3>
             <p className="text-gray-600">Suggestions for improvement</p>
           </div>

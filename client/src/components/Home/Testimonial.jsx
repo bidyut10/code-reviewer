@@ -54,7 +54,7 @@ const Testimonial = () => {
       <div className="space-y-16">
         {/* Header */}
         <div className="flex flex-col justify-center items-center space-y-6">
-          <Quote className="w-12 h-12 text-[#c1ff72]" strokeWidth={1} />
+          <Quote className="w-12 h-12 text-[#50D890]" strokeWidth={1} />
           <h2 className="text-3xl leading-relaxed">
             From the developers who use CodeWiseAI every day
           </h2>
@@ -69,7 +69,7 @@ const Testimonial = () => {
                 <img
                   src={testimonials[activeIndex].image}
                   alt={testimonials[activeIndex].name}
-                  className="w-16 h-16 rounded-full border-4 border-[#c1ff72]/20"
+                  className="w-16 h-16 rounded-full border-4 border-[#50D890]/20"
                 />
                 <div>
                   <h3 className="text-xl font-normal mb-1">
@@ -90,7 +90,7 @@ const Testimonial = () => {
                       <React.Fragment key={index}>
                         {part}
                         {index < array.length - 1 && (
-                          <span className="text-[#c1ff72]">
+                          <span className="text-[#50D890]">
                             {testimonials[activeIndex].highlight}
                           </span>
                         )}
@@ -100,7 +100,7 @@ const Testimonial = () => {
               </div>
 
               {/* Hand-drawn style separator */}
-              <div className="w-24 h-1 bg-[#c1ff72] rounded-full mx-auto opacity-50 transform -rotate-2"></div>
+              <div className="w-24 h-1 bg-[#50D890] rounded-full mx-auto opacity-50 transform -rotate-2"></div>
             </div>
           </div>
 
@@ -108,7 +108,7 @@ const Testimonial = () => {
           <div className="flex justify-between items-center mt-8 max-w-4xl mx-auto">
             <button
               onClick={() => navigate("prev")}
-              className="group flex items-center gap-2 text-gray-600 hover:text-[#c1ff72] transition-colors"
+              className="group flex items-center gap-2 text-gray-600 hover:text-[#50D890] transition-colors"
             >
               <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
               <span className="text-sm font-normal">Previous story</span>
@@ -121,7 +121,7 @@ const Testimonial = () => {
                   onClick={() => setActiveIndex(idx)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 transform hover:scale-150 ${
                     idx === activeIndex
-                      ? "bg-[#c1ff72] scale-125"
+                      ? "bg-[#50D890] scale-125"
                       : "bg-gray-300"
                   }`}
                 />
@@ -130,7 +130,7 @@ const Testimonial = () => {
 
             <button
               onClick={() => navigate("next")}
-              className="group flex items-center gap-2 text-gray-600 hover:text-[#c1ff72] transition-colors"
+              className="group flex items-center gap-2 text-gray-600 hover:text-[#50D890] transition-colors"
             >
               <span className="text-sm font-normal">Next story</span>
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -142,7 +142,7 @@ const Testimonial = () => {
       {/* Scroll to top button */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed bottom-8 right-8 p-3 bg-black/80 hover:bg-[#c1ff72] rounded-full shadow-lg transition-all duration-300 ${
+        className={`fixed bottom-8 right-8 p-3 bg-black/80 hover:bg-[#50D890] rounded-full shadow-lg transition-all duration-300 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >

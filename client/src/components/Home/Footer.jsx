@@ -24,7 +24,7 @@ const Footer = () => {
     <footer className="w-full py-16">
       {showToast && (
         <div className="fixed bottom-4 right-4 bg-black text-white px-6 py-3 rounded-xl shadow-lg transition-all duration-300 flex items-center gap-2">
-          <div className="w-2 h-2 bg-[#c1ff72] rounded-full"></div>
+          <div className="w-2 h-2 bg-[#50D890] rounded-full"></div>
           Thanks for subscribing!
         </div>
       )}
@@ -82,10 +82,10 @@ const Footer = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full p-3 rounded-xl border border-gray-200 text-gray-800 focus:outline-none focus:border-[#c1ff72] transition-colors"
+                  className="w-full p-3 rounded-xl border border-gray-200 text-gray-800 focus:outline-none focus:border-[#50D890] transition-colors"
                 />
                 <button
-                  className="w-full bg-black hover:bg-[#c1ff72] text-white py-3 px-6 rounded-xl transition-colors duration-300 flex items-center justify-center gap-2"
+                  className="w-full bg-black hover:bg-[#50D890] text-white py-3 px-6 rounded-xl transition-colors duration-300 flex items-center justify-center gap-2"
                   type="submit"
                 >
                   Subscribe
@@ -103,7 +103,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg hover:bg-black transition-colors"
                 >
-                  <Twitter className="w-5 h-5 text-gray-600 hover:text-[#c1ff72]" />
+                  <Twitter className="w-5 h-5 text-gray-600 hover:text-[#50D890]" />
                 </a>
                 <a
                   href="https://github.com/bidyut10"
@@ -111,7 +111,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg hover:bg-black transition-colors"
                 >
-                  <GithubIcon className="w-5 h-5 text-gray-600 hover:text-[#c1ff72]" />
+                  <GithubIcon className="w-5 h-5 text-gray-600 hover:text-[#50D890]" />
                 </a>
                 <a
                   href="https://www.producthunt.com/products/codewise-ai"
@@ -119,7 +119,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg hover:bg-black transition-colors"
                 >
-                  <Box className="w-5 h-5 text-gray-600 hover:text-[#c1ff72]" />
+                  <Box className="w-5 h-5 text-gray-600 hover:text-[#50D890]" />
                 </a>
               </div>
             </div>
@@ -133,11 +133,11 @@ const Footer = () => {
               &copy; {new Date().getFullYear()} CodeWiseAI. All rights reserved.
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[#c1ff72]">Founded 2024</span>
+              <span className="text-[#50D890]">Founded 2024</span>
               <span>•</span>
               <span className="flex items-center gap-1">
                 Made with{" "}
-                <Heart size={14} className="text-[#c1ff72] fill-[#c1ff72]" /> in
+                <Heart size={14} className="text-[#50D890] fill-[#50D890]" /> in
                 India
               </span>
             </div>
