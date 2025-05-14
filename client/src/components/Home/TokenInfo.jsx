@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import {ArrowRight, CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
 
 const TokenInfo = () => {
   const handleSignupRedirect = () => {
@@ -16,28 +16,34 @@ const TokenInfo = () => {
       <div className="w-full max-w-5xl rounded-xl text-black">
         <ul className=" space-y-4">
           <li className="flex gap-3 items-center">
-            <CheckCircle className="text-[#50D890] w-4 h-4" />
+            <CheckCircle className="text-[#c1ff72] w-4 h-4" />
             <span>Get 10 free tokens upon signup.</span>
           </li>
           <li className="flex gap-3 items-center">
-            <CheckCircle className="text-[#50D890] w-4 h-4" />
+            <CheckCircle className="text-[#c1ff72] w-4 h-4" />
             <span>1 token = 1 code review.</span>
           </li>
           <li className="flex gap-3 items-center">
-            <CheckCircle className="text-[#50D890] w-4 h-4" />
+            <CheckCircle className="text-[#c1ff72] w-4 h-4" />
             <span>Purchase additional tokens at $1 per token.</span>
           </li>
           <li className="flex gap-3 items-center">
-            <CheckCircle className="text-[#50D890] w-4 h-4" />
+            <CheckCircle className="text-[#c1ff72] w-4 h-4" />
             <span>No subscription — buy only what you need.</span>
           </li>
         </ul>
 
         {/* Call to Action */}
         <div className="mt-8 flex flex-col md:flex-row items-center justify-center gap-6">
+          {/* <button
+            onClick={handleSignupRedirect}
+            className="flex justify-center items-center w-full md:w-auto gap-2 bg-black text-white px-6 py-4 md:py-3 rounded-xl hover:bg-[#c1ff72] transition-all duration-300"
+          >
+            Sign Up & Get Free Tokens
+          </button> */}
           <button
             onClick={handleSignupRedirect}
-            className="group flex justify-center items-center w-full md:w-auto gap-2 bg-black text-white px-6 py-4 md:py-3 rounded-xl hover:bg-[#50D890] transition-all duration-300"
+            className="group flex justify-center items-center w-full md:w-auto gap-2 bg-black text-white px-6 py-4 md:py-3 rounded-xl hover:bg-[#c1ff72] transition-all duration-300"
           >
             Sign Up & Get Free Tokens
             <ArrowRight

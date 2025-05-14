@@ -1,22 +1,20 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import HeroSection from "../components/Home/HeroSection";
-import HeroNavbar from "../components/Home/HeroNavbar";
 import Features from "../components/Home/Features";
-import FeaturesAndFaqSection from "../components/Home/FeaturesAndFaqSection";
+import FAQ from "../components/Home/FAQ";
 import Testimonial from "../components/Home/Testimonial";
 import Footer from "../components/Home/Footer";
-import TokenInfo from "../components/Home/TokenInfo";
+import Home from "../components/Home/Home";
+import Navbar from "../components/Home/Navbar";
 
 const HomeNew = () => {
   return (
-    <div className="w-full flex flex-col justify-center items-center space-y-16 px-[10px] md:px-[0px]">
-      <HeroNavbar />
-      <HeroSection />
+    <div className="w-full flex flex-col justify-center items-center">
+      <Navbar />
+      <Home />
       <Features />
-      <TokenInfo />
-      <FeaturesAndFaqSection />
       <Testimonial />
+      <FAQ />
       <Footer />
     </div>
   );
