@@ -1,155 +1,165 @@
-import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, ArrowUp, Quote } from "lucide-react";
-import image1 from "../../assets/users/image1.jpg";
-import image2 from "../../assets/users/image2.jpg";
-import image3 from "../../assets/users/image3.jpg";
+// eslint-disable-next-line no-unused-vars
+import React from "react";
+import { Quote, Heart, Sparkles } from "lucide-react";
 
-const Testimonial = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+const testimonials = [
+  {
+    name: "Sounak Agarwal",
+    role: "Senior Developer at HCL",
+    text: "You know what's amazing? Having CodeWiseAI watch over our code. It's like having that one super-detail-oriented friend who catches all the little things we might miss. Been using it for months now, and honestly, our code quality has never been better. Such a relief to have this extra layer of confidence before pushing code!",
+    highlight: "our code quality has never been better",
+    background: "#38bdf8",
+    isQuote: true,
+  },
+  {
+    name: "Rupam Sen",
+    role: "Software Developer",
+    text: "I remember when we first started using CodeWiseAI - it felt like having a senior dev looking over my shoulder, but in a good way! It's caught so many potential issues before they could cause problems.",
+    background: "#ffffff",
+    logoText: "CODEGUARD",
+    isLogo: true,
+  },
+  {
+    name: "Jörg Schmidt",
+    role: "Founder of CodeCraft Solutions",
+    text: "CodeWiseAI makes it incredibly easy for me to secure clean code and maintain high standards with developers that resonate with my team's goals.",
+    highlight: "incredibly easy for me to secure clean code",
+    background: "#fde047",
+    isQuote: true,
+  },
+  {
+    name: "MergeFlow",
+    logoText: "MERGE FLOW",
+    background: "#ffffff",
+    isLogo: true,
+  },
+  {
+    name: "Zain Khan",
+    role: "Lead Engineer",
+    background: "#4ade80",
+    hasProfile: true,
+  },
+  {
+    name: "CodePro",
+    logoText: "C⌘DE PRO",
+    background: "#ffffff",
+    isLogo: true,
+  },
+  {
+    name: "Ali Sharma",
+    role: "Developer Advocate",
+    background: "#fb923c",
+    hasProfile: true,
+  },
+  {
+    name: "Paula Echeverria",
+    role: "Manager at DevHub Community",
+    text: "CodeWiseAI has become a valuable channel for connecting better code practices with our teams. The platform simplifies the process, and implementations are always secure, making it a reliable tool for managing our codebase.",
+    highlight: "platform simplifies the process",
+    background: "#c084fc",
+    isQuote: true,
+  },
+  {
+    name: "Bonnie Weber",
+    role: "Senior QA Engineer",
+    background: "#7dd3fc",
+    hasProfile: true,
+  },
+  {
+    name: "CodeBuddy",
+    logoText: "〈/〉",
+    background: "#ffffff",
+    isLogo: true,
+  },
+];
 
-  const testimonials = [
-    {
-      name: "Sounak Agarwal",
-      role: "Senior Developer at HCL",
-      image: image1,
-      text: "You know what's amazing? Having CodeWiseAI watch over our code. It's like having that one super-detail-oriented friend who catches all the little things we might miss. Been using it for months now, and honestly, our code quality has never been better. Such a relief to have this extra layer of confidence before pushing code!",
-      highlight: "our code quality has never been better",
-    },
-    {
-      name: "Rupam Sen",
-      role: "Software Developer",
-      image: image2,
-      text: "I remember when we first started using CodeWiseAI - it felt like having a senior dev looking over my shoulder, but in a good way! It's caught so many potential issues before they could cause problems. The suggestions are always spot-on, and I've learned so much just from following its advice. Seriously can't imagine coding without it now.",
-      highlight: "learned so much just from following its advice",
-    },
-    {
-      name: "Subhajit Khan",
-      role: "Junior Developer",
-      image: image3,
-      text: "As someone just starting out, CodeWiseAI has been like having a personal mentor. It doesn't just point out what's wrong - it explains why and shows how to make it better. The best part? I'm actually becoming a better developer because of it. Every code review feels like a mini learning session!",
-      highlight: "becoming a better developer because of it",
-    },
-  ];
+const TestimonialCard = ({ item }) => {
+  const baseClass = `rounded-xl p-6 h-full w-full overflow-hidden relative flex flex-col justify-between`;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > 300);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  if (item.isQuote) {
+    return (
+      <div
+        className={`${baseClass} text-black`}
+        style={{ backgroundColor: item.background }}
+      >
+        <Quote className="absolute top-4 left-4 w-6 h-6 opacity-10" />
+        <div className="z-10 mt-10">
+          <p className="mb-4 text-sm">"{item.text}"</p>
+          <p className="text-sm font-semibold">{item.name}</p>
+          <p className="text-xs text-gray-700">{item.role}</p>
+        </div>
+        <Sparkles className="w-4 h-4 mt-4 self-end" />
+      </div>
+    );
+  }
 
-  const navigate = (direction) => {
-    setActiveIndex((prev) => {
-      if (direction === "next") {
-        return (prev + 1) % testimonials.length;
-      }
-      return (prev - 1 + testimonials.length) % testimonials.length;
-    });
-  };
+  if (item.isLogo) {
+    return (
+      <div
+        className={`${baseClass} bg-white shadow-xl flex items-center justify-center text-black font-bold text-xl pt-12`}
+        style={{ backgroundColor: item.background }}
+      >
+        <p>{item.logoText}</p>
+      </div>
+    );
+  }
 
+  if (item.hasProfile) {
+    return (
+      <div
+        className={`${baseClass} text-white`}
+        style={{ backgroundColor: item.background }}
+      >
+        <div>
+          <p className="font-semibold text-lg">{item.name}</p>
+          <p className="text-sm">{item.role}</p>
+        </div>
+        <Heart className="w-4 h-4 mt-4 self-end" />
+      </div>
+    );
+  }
+
+  return null;
+};
+
+const TestimonialGrid = () => {
   return (
-    <section className="w-full max-w-5xl mx-auto py-16">
-      <div className="space-y-16">
-        {/* Header */}
-        <div className="flex flex-col justify-center items-center space-y-6">
-          <Quote className="w-12 h-12 text-[#50D890]" strokeWidth={1} />
-          <h2 className="text-3xl leading-relaxed">
-            From the developers who use CodeWiseAI every day
-          </h2>
-        </div>
-
-        {/* Main Testimonial */}
-        <div className="relative">
-          <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-xl">
-            <div className="max-w-4xl mx-auto space-y-8">
-              {/* Author info */}
-              <div className="flex items-center gap-4">
-                <img
-                  src={testimonials[activeIndex].image}
-                  alt={testimonials[activeIndex].name}
-                  className="w-16 h-16 rounded-full border-4 border-[#50D890]/20"
-                />
-                <div>
-                  <h3 className="text-xl font-normal mb-1">
-                    {testimonials[activeIndex].name}
-                  </h3>
-                  <p className="text-gray-600">
-                    {testimonials[activeIndex].role}
-                  </p>
-                </div>
-              </div>
-
-              {/* Testimonial text */}
-              <div className="space-y-6">
-                <p className="text-xl leading-relaxed text-gray-800">
-                  {testimonials[activeIndex].text
-                    .split(testimonials[activeIndex].highlight)
-                    .map((part, index, array) => (
-                      <React.Fragment key={index}>
-                        {part}
-                        {index < array.length - 1 && (
-                          <span className="text-[#50D890]">
-                            {testimonials[activeIndex].highlight}
-                          </span>
-                        )}
-                      </React.Fragment>
-                    ))}
-                </p>
-              </div>
-
-              {/* Hand-drawn style separator */}
-              <div className="w-24 h-1 bg-[#50D890] rounded-full mx-auto opacity-50 transform -rotate-2"></div>
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex justify-between items-center mt-8 max-w-4xl mx-auto">
-            <button
-              onClick={() => navigate("prev")}
-              className="group flex items-center gap-2 text-gray-600 hover:text-[#50D890] transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              <span className="text-sm font-normal">Previous story</span>
-            </button>
-
-            <div className="flex gap-2">
-              {testimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveIndex(idx)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 transform hover:scale-150 ${
-                    idx === activeIndex
-                      ? "bg-[#50D890] scale-125"
-                      : "bg-gray-300"
-                  }`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={() => navigate("next")}
-              className="group flex items-center gap-2 text-gray-600 hover:text-[#50D890] transition-colors"
-            >
-              <span className="text-sm font-normal">Next story</span>
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-        </div>
+    <div id="testimonials" className="py-24 px-4 md:px-0 w-full max-w-7xl">
+      <div className="space-y-3 mb-16">
+        <p className="text-4xl text-start md:text-center font-semibold text-gray-900 ">
+          Powered by passion,
+        </p>
+        <p className="text-4xl text-start md:text-center font-semibold text-gray-900 ">
+          built for people like you
+        </p>
+        <p className="text-gray-600 text-start md:text-center">
+          Join the community of leading creators and get more out of your
+          business.
+        </p>
       </div>
 
-      {/* Scroll to top button */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed bottom-8 right-8 p-3 bg-black/80 hover:bg-[#50D890] rounded-full shadow-lg transition-all duration-300 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-      >
-        <ArrowUp className="w-5 h-5 text-white" />
-      </button>
-    </section>
+      {/* First Row: 3 columns */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
+        {testimonials.slice(0, 3).map((item, index) => (
+          <TestimonialCard key={index} item={item} />
+        ))}
+      </div>
+
+      {/* Second Row: 4 columns */}
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mb-8">
+        {testimonials.slice(3, 7).map((item, index) => (
+          <TestimonialCard key={index + 3} item={item} />
+        ))}
+      </div>
+
+      {/* Third Row: 3 columns */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+        {testimonials.slice(7, 10).map((item, index) => (
+          <TestimonialCard key={index + 7} item={item} />
+        ))}
+      </div>
+    </div>
   );
 };
 
-export default Testimonial;
+export default TestimonialGrid;
