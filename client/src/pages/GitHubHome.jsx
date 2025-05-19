@@ -8,7 +8,7 @@ const GitHubHome = () => {
   const { repos, events, user, loading } = useGitHubData();
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center bg-white">
       <Navbar />
       <FullScreenLoader loading={loading} />
       <div className="min-h-screen w-full max-w-5xl mt-10 flex flex-col md:flex-row md:justify-between gap-10 md:mt-20 md:mb-0 mb-20 px-[10px] md:px-[0px]">

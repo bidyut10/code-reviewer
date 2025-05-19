@@ -33,7 +33,7 @@ const CodeReviewResponse = () => {
   };
 
   return (
-    <div className="w-auto mt-10 px-10 lg:px-40 py-10">
+    <div className="w-auto bg-white px-10 lg:px-40 pt-20 pb-10">
       <button
         className="text-xl mb-20 flex justify-center items-center"
         onClick={goBackFunc}
