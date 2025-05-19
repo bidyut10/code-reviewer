@@ -356,7 +356,7 @@ const CodeReviewResponse = () => {
     if (snippet.type === "diff") {
       return (
         <div className="mt-4 mb-6">
-          <div className="bg-gray-100 border rounded-md p-4 mb-2">
+          <div className="bg-gray-50 border rounded-md p-4 mb-2">
             <div className="text-sm text-gray-500 mb-2">Original Code:</div>
             <pre className="bg-gray-800 text-gray-200 p-3 rounded overflow-x-auto text-sm">
               {highlightCode(snippet.before, "javascript")}
@@ -367,7 +367,7 @@ const CodeReviewResponse = () => {
             <ArrowRight className="text-gray-500" />
           </div>
 
-          <div className="bg-gray-100 border rounded-md p-4">
+          <div className="bg-gray-50 border rounded-md p-4">
             <div className="text-sm text-gray-500 mb-2">Suggested Code:</div>
             <pre className="bg-gray-800 text-gray-200 p-3 rounded overflow-x-auto text-sm">
               {highlightCode(snippet.after, "javascript")}
@@ -543,32 +543,14 @@ const CodeReviewResponse = () => {
   const fileTypes = _.uniq(formattedReviews.map((file) => file.fileType));
 
   return (
-    <div className="bg-gray-50 min-h-screen" id="printable-content">
+    <div className="min-h-screen" id="printable-content">
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex items-center">
-          <button
-            onClick={goBack}
-            className="inline-flex items-center text-gray-700 hover:text-gray-900"
-          >
-            <ChevronLeft className="size-5 mr-1" />
-            <span>Back to repository</span>
-          </button>
           <h1 className="ml-8 text-xl font-semibold text-gray-900">
             Code Review Summary
           </h1>
 
           <div className="ml-auto flex items-center gap-4">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search reviews..."
-                className="pl-8 pr-4 py-2 border rounded-md text-sm focus:ring-blue-500 focus:border-blue-500"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Search className="absolute left-2 top-2.5 size-4 text-gray-400" />
-            </div>
-
             <button
               onClick={exportToPDF}
               disabled={isExporting || !hasReview}
@@ -576,7 +558,7 @@ const CodeReviewResponse = () => {
                 ${
                   isExporting || !hasReview
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    : "bg-black text-white hover:bg-gray-950"
                 }`}
             >
               {isExporting ? (
@@ -589,7 +571,28 @@ const CodeReviewResponse = () => {
           </div>
         </div>
       </header>
+      <div className="max-w-7xl mx-auto my-10 px-4 py-4 sm:px-6 lg:px-8 flex items-center">
+        <button
+          onClick={goBack}
+          className="inline-flex items-center text-gray-700 hover:text-gray-900"
+        >
+          <ChevronLeft className="size-5 mr-1" />
+          <span>Go Back</span>
+        </button>
 
+        <div className="ml-auto flex items-center gap-4">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search reviews..."
+              className="pl-8 pr-4 py-2 border rounded-md text-sm focus:ring-blue-500 focus:border-blue-500"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Search className="absolute left-2 top-2.5 size-4 text-gray-400" />
+          </div>
+        </div>
+      </div>
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {hasReview && (
           <div className="mb-6 bg-white p-4 rounded-lg shadow-sm">
