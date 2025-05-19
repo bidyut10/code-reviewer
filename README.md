@@ -1,6 +1,10 @@
 # CodeWise AI Documentation
 
-![CodeWise Hero](./assets/cw_hero.png)
+![CodeWise Hero](./assets/hero.png)
+![CodeWise Hero](./assets/features.png)
+![CodeWise Hero](./assets/testimonials.png)
+![CodeWise Hero](./assets/contact.png)
+![CodeWise Hero](./assets/home.png)
 
 ## Table of Contents
 1. [Introduction](#introduction)
