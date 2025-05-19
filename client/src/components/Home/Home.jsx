@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <main
       id="home"
-      className="w-full flex justify-center items-center pt-40 md:pt-56"
+      className="w-full flex justify-center items-center pt-40"
     >
       <div className="w-full max-w-7xl px-4 md:px-0">
         <div className="flex flex-col md:flex-row justify-between items-start top-0 gap-8">
