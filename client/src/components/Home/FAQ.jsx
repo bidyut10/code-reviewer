@@ -75,14 +75,17 @@ const FAQ = () => {
   ];
 
   return (
-    <div id="faq" className=" bg-white w-full max-w-7xl flex justify-center items-center py-20 px-4 md:px-0">
-      <div className="mt-32 space-y-16">
+    <div
+      id="faq"
+      className=" bg-white w-full max-w-7xl flex justify-center items-center py-20 px-4 md:px-0"
+    >
+      <div className="my-32 space-y-16">
         <div className="space-y-3">
-          <p className="text-4xl text-start md:text-center font-semibold text-gray-900">
+          <p className="text-4xl text-center font-semibold text-gray-900">
             Everything you need
           </p>
-          <p className="text-4xl text-start md:text-center font-semibold text-gray-900">
-            to know about the product.
+          <p className="text-4xl text-center font-semibold text-gray-900 leading-snug">
+            to know about the <span className="block sm:inline"> product.</span>
           </p>
         </div>
 

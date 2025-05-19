@@ -124,13 +124,13 @@ const TestimonialCard = ({ item }) => {
 
 const TestimonialGrid = () => {
   return (
-    <div id="testimonials" className="py-24 px-4 md:px-0 w-full max-w-7xl">
+    <div id="testimonials" className="py-32 px-4 md:px-0 w-full max-w-7xl">
       <div className="space-y-3 mb-16">
-        <p className="text-4xl text-start md:text-center font-semibold text-gray-900 ">
+        <p className="text-4xl text-center font-semibold text-gray-900 ">
           Powered by passion,
         </p>
-        <p className="text-4xl text-start md:text-center font-semibold text-gray-900 ">
-          built for people like you
+        <p className="text-4xl text-center font-semibold text-gray-900 leading-snug">
+          built for people <span className="block sm:inline">like you</span>
         </p>
         <p className="text-gray-600 text-start md:text-center">
           Join the community of leading creators and get more out of your
