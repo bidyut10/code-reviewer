@@ -27,7 +27,7 @@ const Navbar = () => {
           onClick={handleLogout}
           disabled={loading}
         >
-          Log Out
+          Logout
         </button>
       </div>
     </div>

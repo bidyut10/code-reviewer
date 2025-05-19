@@ -543,10 +543,10 @@ const CodeReviewResponse = () => {
   const fileTypes = _.uniq(formattedReviews.map((file) => file.fileType));
 
   return (
-    <div className="min-h-screen" id="printable-content">
+    <div className="min-h-screen bg-white" id="printable-content">
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex items-center">
-          <h1 className="ml-8 text-xl font-semibold text-gray-900">
+          <h1 className="text-xl font-semibold text-gray-900">
             Code Review Summary
           </h1>
 
@@ -554,7 +554,7 @@ const CodeReviewResponse = () => {
             <button
               onClick={exportToPDF}
               disabled={isExporting || !hasReview}
-              className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm 
+              className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-normal rounded-md shadow-sm 
                 ${
                   isExporting || !hasReview
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -571,13 +571,13 @@ const CodeReviewResponse = () => {
           </div>
         </div>
       </header>
-      <div className="max-w-7xl mx-auto my-10 px-4 py-4 sm:px-6 lg:px-8 flex items-center">
+      <div className="max-w-7xl mx-auto mt-8 mb-4 px-4 py-4 sm:px-6 lg:px-8 flex items-center">
         <button
           onClick={goBack}
-          className="inline-flex items-center text-gray-700 hover:text-gray-900"
+          className="inline-flex items-center text-gray-900 hover:text-gray-950"
         >
           <ChevronLeft className="size-5 mr-1" />
-          <span>Go Back</span>
+          <span className="font-normal text-gray-950">Go Back</span>
         </button>
 
         <div className="ml-auto flex items-center gap-4">
