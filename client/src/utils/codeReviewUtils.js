@@ -1,5 +1,5 @@
-import { jsPDF } from "jspdf";
 import * as _ from "lodash";
+// import html2pdf from "html2pdf.js";
 
 // Parse the review content into structured sections
 export const parseReviewContent = (content) => {
@@ -171,276 +171,220 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
     setIsExporting(true);
 
     try {
-        const pdf = new jsPDF({
-            orientation: "portrait",
-            unit: "pt",
-            format: "a4"
-        });
-
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const pageHeight = pdf.internal.pageSize.getHeight();
-        const margin = 40;
-        const contentWidth = pageWidth - 2 * margin;
-        const footerHeight = 30;
-
-        // Add header with logo and date
-        const addHeader = (pageNum) => {
-            pdf.setFontSize(20);
-            pdf.setFont("helvetica", "bold");
-            pdf.text("Code Review Summary", pageWidth / 2, margin, { align: "center" });
-            
-            // Add date
-            const today = new Date();
-            const dateStr = today.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            pdf.setFontSize(12);
-            pdf.setFont("helvetica", "normal");
-            pdf.text(dateStr, pageWidth - margin, margin, { align: "right" });
-        };
-
-        // Add footer with page numbers
-        const addFooter = (pageNum, totalPages) => {
-            pdf.setFontSize(10);
-            pdf.setFont("helvetica", "normal");
-            pdf.text(
-                `Page ${pageNum} of ${totalPages}`,
-                pageWidth / 2,
-                pageHeight - footerHeight,
-                { align: "center" }
-            );
-        };
-
-        let currentPage = 1;
-        let totalPages = 1;
-        let yPosition = margin + 60; // Increased to account for header
-
-        // First pass to count total pages
-        formattedReviews.forEach(file => {
-            // Estimate pages needed for this file
-            const contentLength = JSON.stringify(file).length;
-            const estimatedPages = Math.ceil(contentLength / 5000); // Rough estimate
-            totalPages += estimatedPages;
-        });
-
-        // Process each review
-        for (let fileIndex = 0; fileIndex < formattedReviews.length; fileIndex++) {
-            const file = formattedReviews[fileIndex];
-
-            // Add new page if not the first file
-            if (fileIndex > 0) {
-                pdf.addPage();
-                currentPage++;
-                yPosition = margin + 60;
-            }
-
-            // Add header to each page
-            addHeader(currentPage);
-
-            // File heading
-            pdf.setFontSize(16);
-            pdf.setFont("helvetica", "bold");
-            pdf.text(file.fileName, margin, yPosition += 30);
-
-            // Add sections
-            Object.keys(file.sections).forEach(sectionName => {
-                if (yPosition > pageHeight - 100) {
-                    pdf.addPage();
-                    currentPage++;
-                    yPosition = margin + 60;
-                    addHeader(currentPage);
-                }
-
-                // Section title
-                yPosition += 30;
-                pdf.setFontSize(14);
-                pdf.setFont("helvetica", "bold");
-                pdf.text(formatSectionTitle(sectionName), margin, yPosition);
-
-                // Section content
-                pdf.setFontSize(12);
-                pdf.setFont("helvetica", "normal");
-
-                const contentLines = formatTextForPDF(file.sections[sectionName], contentWidth, pdf);
-                contentLines.forEach(line => {
-                    if (yPosition > pageHeight - 100) {
-                        pdf.addPage();
-                        currentPage++;
-                        yPosition = margin + 60;
-                        addHeader(currentPage);
-                    }
-                    yPosition += 20;
-                    pdf.text(line, margin, yPosition);
-                });
-
-                yPosition += 20; // Add space after section
-            });
-
-            // Add code snippets
-            if (file.codeSnippets && file.codeSnippets.length > 0) {
-                if (yPosition > pageHeight - 100) {
-                    pdf.addPage();
-                    currentPage++;
-                    yPosition = margin + 60;
-                    addHeader(currentPage);
-                }
-
-                yPosition += 30;
-                pdf.setFontSize(14);
-                pdf.setFont("helvetica", "bold");
-                pdf.text("Code Suggestions", margin, yPosition);
-
-                file.codeSnippets.forEach((snippet, snippetIndex) => {
-                    if (yPosition > pageHeight - 120) {
-                        pdf.addPage();
-                        currentPage++;
-                        yPosition = margin + 60;
-                        addHeader(currentPage);
-                    }
-
-                    // Snippet title
-                    yPosition += 30;
-                    pdf.setFontSize(12);
-                    pdf.setFont("helvetica", "bold");
-                    pdf.text(snippet.title || `Code Suggestion ${snippetIndex + 1}`, margin, yPosition);
-
-                    // Code content
-                    pdf.setFontSize(10);
-                    pdf.setFont("courier", "normal");
-
-                    if (snippet.type === "diff") {
-                        // Before code
-                        yPosition += 20;
-                        pdf.setFont("helvetica", "italic");
-                        pdf.text("Original Code:", margin, yPosition);
-
-                        const beforeLines = formatCodeForPDF(snippet.before, contentWidth - 20, pdf);
-                        pdf.setFont("courier", "normal");
-                        beforeLines.forEach(line => {
-                            if (yPosition > pageHeight - 80) {
-                                pdf.addPage();
-                                currentPage++;
-                                yPosition = margin + 60;
-                                addHeader(currentPage);
-                            }
-                            yPosition += 16;
-                            pdf.text(line, margin + 10, yPosition);
-                        });
-
-                        // After code
-                        if (yPosition > pageHeight - 120) {
-                            pdf.addPage();
-                            currentPage++;
-                            yPosition = margin + 60;
-                            addHeader(currentPage);
-                        }
-
-                        yPosition += 20;
-                        pdf.setFont("helvetica", "italic");
-                        pdf.text("Suggested Code:", margin, yPosition);
-
-                        const afterLines = formatCodeForPDF(snippet.after, contentWidth - 20, pdf);
-                        pdf.setFont("courier", "normal");
-                        afterLines.forEach(line => {
-                            if (yPosition > pageHeight - 80) {
-                                pdf.addPage();
-                                currentPage++;
-                                yPosition = margin + 60;
-                                addHeader(currentPage);
-                            }
-                            yPosition += 16;
-                            pdf.text(line, margin + 10, yPosition);
-                        });
-                    } else {
-                        // Regular code snippet
-                        const codeLines = formatCodeForPDF(snippet.code, contentWidth - 20, pdf);
-                        codeLines.forEach(line => {
-                            if (yPosition > pageHeight - 80) {
-                                pdf.addPage();
-                                currentPage++;
-                                yPosition = margin + 60;
-                                addHeader(currentPage);
-                            }
-                            yPosition += 16;
-                            pdf.text(line, margin + 10, yPosition);
-                        });
-                    }
-
-                    yPosition += 20; // Space after snippet
-                });
-            }
-
-            // Add footer to each page
-            addFooter(currentPage, totalPages);
+        // Create a new window for printing
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+            throw new Error('Popup blocked. Please allow popups for this site.');
         }
 
-        pdf.save("code-review-summary.pdf");
+        // Create the HTML content
+        const content = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Code Review Summary</title>
+                <style>
+                    @page {
+                        size: A4;
+                        margin: 20mm;
+                    }
+                    body {
+                        font-family: Arial, sans-serif;
+                        line-height: 1.6;
+                        color: #333;
+                    }
+                    .page {
+                        page-break-after: always;
+                        position: relative;
+                        min-height: 297mm;
+                        padding: 20mm;
+                        box-sizing: border-box;
+                    }
+                    .header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                        padding-bottom: 10px;
+                        border-bottom: 1px solid #e5e7eb;
+                    }
+                    .header img {
+                        height: 30px;
+                    }
+                    .header .date {
+                        font-size: 12px;
+                        color: #6b7280;
+                    }
+                    .footer {
+                        position: absolute;
+                        bottom: 20mm;
+                        left: 20mm;
+                        right: 20mm;
+                        text-align: center;
+                        font-size: 10px;
+                        color: #6b7280;
+                        border-top: 1px solid #e5e7eb;
+                        padding-top: 10px;
+                    }
+                    h2 {
+                        font-size: 16px;
+                        font-weight: bold;
+                        margin-bottom: 20px;
+                        color: #1f2937;
+                    }
+                    h3 {
+                        font-size: 14px;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                        color: #1f2937;
+                    }
+                    h4 {
+                        font-size: 12px;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                        color: #4b5563;
+                    }
+                    p {
+                        margin-bottom: 15px;
+                        color: #374151;
+                    }
+                    ul {
+                        list-style-type: disc;
+                        padding-left: 20px;
+                        margin-bottom: 15px;
+                    }
+                    li {
+                        margin-bottom: 5px;
+                        color: #374151;
+                    }
+                    pre {
+                        background-color: #f3f4f6;
+                        padding: 10px;
+                        border-radius: 4px;
+                        font-family: monospace;
+                        font-size: 10px;
+                        overflow-x: auto;
+                        margin-bottom: 10px;
+                    }
+                    .code-label {
+                        font-style: italic;
+                        margin-bottom: 5px;
+                        color: #6b7280;
+                    }
+                    @media print {
+                        body {
+                            -webkit-print-color-adjust: exact;
+                            print-color-adjust: exact;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                ${formattedReviews.map((file, fileIndex) => `
+                    <div class="page">
+                        <div class="header">
+                            <img src="/src/assets/cwl.png" alt="Logo">
+                            <div class="date">${new Date().toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}</div>
+                        </div>
+                        
+                        <h2>${file.fileName}</h2>
+                        
+                        ${Object.keys(file.sections).map(sectionName => `
+                            <h3>${formatSectionTitle(sectionName)}</h3>
+                            ${formatContent(file.sections[sectionName]).map(item => {
+                                if (item.type === 'list') {
+                                    return `
+                                        <ul>
+                                            ${item.items.map(bullet => `
+                                                <li>${bullet}</li>
+                                            `).join('')}
+                                        </ul>
+                                    `;
+                                } else {
+                                    return `<p>${item.content}</p>`;
+                                }
+                            }).join('')}
+                        `).join('')}
+                        
+                        ${file.codeSnippets && file.codeSnippets.length > 0 ? `
+                            <h3>Code Suggestions</h3>
+                            ${file.codeSnippets.map((snippet, index) => `
+                                <div>
+                                    <h4>${snippet.title || `Code Suggestion ${index + 1}`}</h4>
+                                    ${snippet.type === 'diff' ? `
+                                        <div class="code-label">Original Code:</div>
+                                        <pre>${snippet.before}</pre>
+                                        <div class="code-label">Suggested Code:</div>
+                                        <pre>${snippet.after}</pre>
+                                    ` : `
+                                        <pre>${snippet.code}</pre>
+                                    `}
+                                </div>
+                            `).join('')}
+                        ` : ''}
+                        
+                        <div class="footer">
+                            Page ${fileIndex + 1} of ${formattedReviews.length}
+                        </div>
+                    </div>
+                `).join('')}
+            </body>
+            </html>
+        `;
+
+        // Write the content to the new window
+        printWindow.document.write(content);
+        printWindow.document.close();
+
+        // Wait for images to load
+        await new Promise(resolve => {
+            const images = printWindow.document.getElementsByTagName('img');
+            let loadedImages = 0;
+            
+            if (images.length === 0) {
+                resolve();
+                return;
+            }
+
+            Array.from(images).forEach(img => {
+                if (img.complete) {
+                    loadedImages++;
+                    if (loadedImages === images.length) {
+                        resolve();
+                    }
+                } else {
+                    img.onload = () => {
+                        loadedImages++;
+                        if (loadedImages === images.length) {
+                            resolve();
+                        }
+                    };
+                    img.onerror = () => {
+                        loadedImages++;
+                        if (loadedImages === images.length) {
+                            resolve();
+                        }
+                    };
+                }
+            });
+        });
+
+        // Print the window
+        printWindow.print();
+        
+        // Close the window after printing
+        printWindow.onafterprint = () => {
+            printWindow.close();
+        };
     } catch (err) {
         console.error("Error exporting to PDF:", err);
     } finally {
         setIsExporting(false);
     }
-};
-
-// Format text for PDF with proper line breaks
-const formatTextForPDF = (text, maxWidth, pdf) => {
-    if (!text) return [];
-
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(12);
-
-    const lines = [];
-    text.split("\n").forEach(paragraph => {
-        if (paragraph.trim() === "") {
-            lines.push(" ");
-            return;
-        }
-
-        // Handle bullet points
-        if (paragraph.trim().startsWith("•") || paragraph.trim().startsWith("-")) {
-            const bulletItems = paragraph.split(/[•-]\s+/).filter(Boolean);
-            bulletItems.forEach(item => {
-                const wrappedText = pdf.splitTextToSize("• " + item.trim(), maxWidth);
-                wrappedText.forEach((line, i) => {
-                    if (i > 0) {
-                        // Indent continuing bullet point lines
-                        lines.push("  " + line);
-                    } else {
-                        lines.push(line);
-                    }
-                });
-            });
-        } else {
-            // Regular paragraph
-            const wrappedText = pdf.splitTextToSize(paragraph, maxWidth);
-            lines.push(...wrappedText);
-        }
-    });
-
-    return lines;
-};
-
-// Format code for PDF with proper line breaks
-const formatCodeForPDF = (code, maxWidth, pdf) => {
-    if (!code) return [];
-
-    pdf.setFont("courier", "normal");
-    pdf.setFontSize(10);
-
-    const lines = [];
-    code.split("\n").forEach(line => {
-        if (pdf.getStringUnitWidth(line) * 10 > maxWidth) {
-            // If line is too long, wrap it
-            const wrappedText = pdf.splitTextToSize(line, maxWidth);
-            lines.push(...wrappedText);
-        } else {
-            lines.push(line);
-        }
-    });
-
-    return lines;
 };
 
 // Get UI style helpers

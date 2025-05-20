@@ -231,22 +231,19 @@ const CodeReviewResponse = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50" id="printable-content">
+    <div className="min-h-screen bg-white" id="printable-content">
       {/* Header with Logo and Export PDF Button */}
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <img src={logo} alt="Logo" className="h-8 w-auto" />
-            <h1 className="text-xl font-semibold text-gray-900 hidden sm:block">Code Review</h1>
-          </div>
+          <img src={logo} alt="Logo" className="h-6 w-auto" />
           <button
             onClick={handleExportPDF}
             disabled={isExporting || !hasReview}
-            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm transition-colors duration-200
+            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm transition-all duration-200
               ${
                 isExporting || !hasReview
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-black text-white hover:bg-gray-900"
+                  : "bg-black text-white hover:bg-gray-900 hover:scale-105"
               }`}
           >
             {isExporting ? (
@@ -298,9 +295,9 @@ const CodeReviewResponse = () => {
               </span>
               <button
                 onClick={() => filterByType("all")}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 ${
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                   filterActive === "all"
-                    ? "bg-black text-white"
+                    ? "bg-black text-white shadow-sm"
                     : "bg-gray-100 text-gray-800 hover:bg-gray-200"
                 }`}
               >
@@ -310,9 +307,9 @@ const CodeReviewResponse = () => {
                 <button
                   key={type}
                   onClick={() => filterByType(type)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                     filterActive === type
-                      ? "bg-black text-white"
+                      ? "bg-black text-white shadow-sm"
                       : "bg-gray-100 text-gray-800 hover:bg-gray-200"
                   }`}
                 >
@@ -329,11 +326,11 @@ const CodeReviewResponse = () => {
             {filteredReviews.map((file) => (
               <div
                 key={file.id}
-                className="bg-white rounded-lg shadow-sm border overflow-hidden pdf-section transition-shadow duration-200 hover:shadow-md"
+                className="bg-white rounded-lg shadow-sm border overflow-hidden pdf-section transition-all duration-200 hover:shadow-md"
                 data-filename={file.fileName}
               >
                 <div
-                  className={`px-6 py-5 border-b cursor-pointer hover:bg-gray-50 transition-colors duration-200 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 ${
+                  className={`px-6 py-5 border-b cursor-pointer hover:bg-gray-50 transition-all duration-200 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 ${
                     expandedFile === file.id ? "bg-gray-50" : ""
                   }`}
                   onClick={() => toggleFile(file.id)}
@@ -364,9 +361,9 @@ const CodeReviewResponse = () => {
                   </div>
                   <div className="flex-shrink-0">
                     {expandedFile === file.id ? (
-                      <ChevronUp className="size-5 text-gray-500" />
+                      <ChevronUp className="size-5 text-gray-500 transition-transform duration-200" />
                     ) : (
-                      <ChevronDown className="size-5 text-gray-500" />
+                      <ChevronDown className="size-5 text-gray-500 transition-transform duration-200" />
                     )}
                   </div>
                 </div>
@@ -377,7 +374,7 @@ const CodeReviewResponse = () => {
                     {Object.keys(file.sections).map((section) => (
                       <div key={section} className="rounded-lg border overflow-hidden">
                         <div
-                          className={`flex items-center px-4 py-3 cursor-pointer transition-colors duration-200 ${getSeverityColor(
+                          className={`flex items-center px-4 py-3 cursor-pointer transition-all duration-200 ${getSeverityColor(
                             section
                           )}`}
                           onClick={() => toggleSection(file.id, section)}
@@ -388,15 +385,15 @@ const CodeReviewResponse = () => {
                           </h3>
                           <div className="ml-auto">
                             {isSectionActive(file.id, section) ? (
-                              <ChevronUp className="size-4" />
+                              <ChevronUp className="size-4 transition-transform duration-200" />
                             ) : (
-                              <ChevronDown className="size-4" />
+                              <ChevronDown className="size-4 transition-transform duration-200" />
                             )}
                           </div>
                         </div>
 
                         {isSectionActive(file.id, section) && (
-                          <div className="px-4 py-3 bg-white">
+                          <div className="px-4 py-3 bg-white border-t">
                             <div className="prose max-w-none">
                               {renderFormattedContent(
                                 formatContent(file.sections[section])
@@ -411,7 +408,7 @@ const CodeReviewResponse = () => {
                     {file.codeSnippets.length > 0 && (
                       <div className="rounded-lg border overflow-hidden">
                         <div
-                          className={`flex items-center px-4 py-3 cursor-pointer transition-colors duration-200 ${getSeverityColor(
+                          className={`flex items-center px-4 py-3 cursor-pointer transition-all duration-200 ${getSeverityColor(
                             "code"
                           )}`}
                           onClick={() => toggleSection(file.id, "code")}
@@ -422,15 +419,15 @@ const CodeReviewResponse = () => {
                           </h3>
                           <div className="ml-auto">
                             {isSectionActive(file.id, "code") ? (
-                              <ChevronUp className="size-4" />
+                              <ChevronUp className="size-4 transition-transform duration-200" />
                             ) : (
-                              <ChevronDown className="size-4" />
+                              <ChevronDown className="size-4 transition-transform duration-200" />
                             )}
                           </div>
                         </div>
 
                         {isSectionActive(file.id, "code") && (
-                          <div className="px-4 py-3 bg-white">
+                          <div className="px-4 py-3 bg-white border-t">
                             {file.codeSnippets.map((snippet, index) => (
                               <div key={index} className="mb-6 last:mb-0">
                                 <h4 className="text-sm font-medium text-gray-900 mb-2">
