@@ -170,13 +170,217 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
     setIsExporting(true);
 
     try {
-        const element = document.getElementById('printable-content');
-        if (!element) {
-            throw new Error('Printable content not found');
-        }
+        // Create a temporary container for PDF content
+        const container = document.createElement('div');
+        container.style.position = 'absolute';
+        container.style.left = '-9999px';
+        container.style.top = '-9999px';
+        container.style.width = '210mm';
+        container.style.padding = '20mm';
+        container.style.background = '#fff';
+        container.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+        container.style.fontSize = '12pt';
+        container.style.lineHeight = '1.6';
+        container.style.color = '#333';
 
+        // Add content to container
+        formattedReviews.forEach((file, fileIndex) => {
+            const fileSection = document.createElement('div');
+            fileSection.style.pageBreakAfter = 'always';
+            fileSection.style.marginBottom = '20mm';
+
+            // Add header
+            const header = document.createElement('div');
+            header.style.display = 'flex';
+            header.style.justifyContent = 'space-between';
+            header.style.alignItems = 'center';
+            header.style.marginBottom = '20px';
+            header.style.paddingBottom = '10px';
+            header.style.borderBottom = '2px solid #e5e7eb';
+
+            const logo = document.createElement('img');
+            logo.src = window.location.origin + '/src/assets/cwl.png';
+            logo.alt = 'Logo';
+            logo.style.height = '40px';
+            logo.style.width = 'auto';
+
+            const date = document.createElement('div');
+            date.textContent = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            date.style.fontSize = '14px';
+            date.style.color = '#666';
+
+            header.appendChild(logo);
+            header.appendChild(date);
+            fileSection.appendChild(header);
+
+            // Add file name
+            const fileName = document.createElement('h2');
+            fileName.textContent = file.fileName;
+            fileName.style.fontSize = '20px';
+            fileName.style.fontWeight = '600';
+            fileName.style.marginBottom = '20px';
+            fileName.style.paddingBottom = '10px';
+            fileName.style.borderBottom = '1px solid #e5e7eb';
+            fileSection.appendChild(fileName);
+
+            // Add sections
+            Object.keys(file.sections).forEach(sectionName => {
+                const section = document.createElement('div');
+                section.style.marginBottom = '20px';
+                section.style.padding = '15px';
+                section.style.background = '#f8f9fa';
+                section.style.borderRadius = '6px';
+
+                const sectionTitle = document.createElement('h3');
+                sectionTitle.textContent = formatSectionTitle(sectionName);
+                sectionTitle.style.fontSize = '16px';
+                sectionTitle.style.fontWeight = '600';
+                sectionTitle.style.marginBottom = '15px';
+                sectionTitle.style.color = '#1a1a1a';
+                section.appendChild(sectionTitle);
+
+                const content = formatContent(file.sections[sectionName]);
+                content.forEach(item => {
+                    if (item.type === 'list') {
+                        const ul = document.createElement('ul');
+                        ul.style.listStyleType = 'disc';
+                        ul.style.paddingLeft = '25px';
+                        ul.style.marginBottom = '15px';
+
+                        item.items.forEach(bullet => {
+                            const li = document.createElement('li');
+                            li.textContent = bullet;
+                            li.style.marginBottom = '8px';
+                            li.style.color = '#444';
+                            ul.appendChild(li);
+                        });
+
+                        section.appendChild(ul);
+                    } else {
+                        const p = document.createElement('p');
+                        p.textContent = item.content;
+                        p.style.marginBottom = '15px';
+                        p.style.color = '#444';
+                        section.appendChild(p);
+                    }
+                });
+
+                fileSection.appendChild(section);
+            });
+
+            // Add code snippets
+            if (file.codeSnippets && file.codeSnippets.length > 0) {
+                const codeSection = document.createElement('div');
+                codeSection.style.marginBottom = '20px';
+                codeSection.style.padding = '15px';
+                codeSection.style.background = '#f8f9fa';
+                codeSection.style.borderRadius = '6px';
+
+                const codeTitle = document.createElement('h3');
+                codeTitle.textContent = 'Code Suggestions';
+                codeTitle.style.fontSize = '16px';
+                codeTitle.style.fontWeight = '600';
+                codeTitle.style.marginBottom = '15px';
+                codeTitle.style.color = '#1a1a1a';
+                codeSection.appendChild(codeTitle);
+
+                file.codeSnippets.forEach((snippet, index) => {
+                    const snippetDiv = document.createElement('div');
+                    snippetDiv.style.marginBottom = '20px';
+
+                    const snippetTitle = document.createElement('h4');
+                    snippetTitle.textContent = snippet.title || `Code Suggestion ${index + 1}`;
+                    snippetTitle.style.fontSize = '14px';
+                    snippetTitle.style.fontWeight = '600';
+                    snippetTitle.style.marginBottom = '10px';
+                    snippetTitle.style.color = '#333';
+                    snippetDiv.appendChild(snippetTitle);
+
+                    if (snippet.type === 'diff') {
+                        const beforeLabel = document.createElement('div');
+                        beforeLabel.textContent = 'Original Code:';
+                        beforeLabel.style.fontStyle = 'italic';
+                        beforeLabel.style.marginBottom = '5px';
+                        beforeLabel.style.color = '#666';
+                        snippetDiv.appendChild(beforeLabel);
+
+                        const beforeCode = document.createElement('pre');
+                        beforeCode.textContent = snippet.before;
+                        beforeCode.style.background = '#f8f9fa';
+                        beforeCode.style.padding = '15px';
+                        beforeCode.style.borderRadius = '6px';
+                        beforeCode.style.fontFamily = '"SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace';
+                        beforeCode.style.fontSize = '12px';
+                        beforeCode.style.lineHeight = '1.5';
+                        beforeCode.style.overflow = 'auto';
+                        beforeCode.style.margin = '15px 0';
+                        beforeCode.style.border = '1px solid #e5e7eb';
+                        snippetDiv.appendChild(beforeCode);
+
+                        const afterLabel = document.createElement('div');
+                        afterLabel.textContent = 'Suggested Code:';
+                        afterLabel.style.fontStyle = 'italic';
+                        afterLabel.style.marginBottom = '5px';
+                        afterLabel.style.color = '#666';
+                        snippetDiv.appendChild(afterLabel);
+
+                        const afterCode = document.createElement('pre');
+                        afterCode.textContent = snippet.after;
+                        afterCode.style.background = '#f8f9fa';
+                        afterCode.style.padding = '15px';
+                        afterCode.style.borderRadius = '6px';
+                        afterCode.style.fontFamily = '"SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace';
+                        afterCode.style.fontSize = '12px';
+                        afterCode.style.lineHeight = '1.5';
+                        afterCode.style.overflow = 'auto';
+                        afterCode.style.margin = '15px 0';
+                        afterCode.style.border = '1px solid #e5e7eb';
+                        snippetDiv.appendChild(afterCode);
+                    } else {
+                        const code = document.createElement('pre');
+                        code.textContent = snippet.code;
+                        code.style.background = '#f8f9fa';
+                        code.style.padding = '15px';
+                        code.style.borderRadius = '6px';
+                        code.style.fontFamily = '"SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace';
+                        code.style.fontSize = '12px';
+                        code.style.lineHeight = '1.5';
+                        code.style.overflow = 'auto';
+                        code.style.margin = '15px 0';
+                        code.style.border = '1px solid #e5e7eb';
+                        snippetDiv.appendChild(code);
+                    }
+
+                    codeSection.appendChild(snippetDiv);
+                });
+
+                fileSection.appendChild(codeSection);
+            }
+
+            // Add footer
+            const footer = document.createElement('div');
+            footer.style.textAlign = 'center';
+            footer.style.fontSize = '12px';
+            footer.style.color = '#666';
+            footer.style.borderTop = '1px solid #e5e7eb';
+            footer.style.paddingTop = '10px';
+            footer.style.marginTop = '20px';
+            footer.textContent = `Page ${fileIndex + 1} of ${formattedReviews.length}`;
+            fileSection.appendChild(footer);
+
+            container.appendChild(fileSection);
+        });
+
+        // Add container to document
+        document.body.appendChild(container);
+
+        // Configure PDF options
         const opt = {
-            margin: 20,
+            margin: 0,
             filename: 'code-review-summary.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { 
@@ -192,30 +396,11 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
-        // Create a clone of the element to modify for PDF
-        const clone = element.cloneNode(true);
-        document.body.appendChild(clone);
-        clone.style.display = 'block';
-        clone.style.width = '210mm';
-        clone.style.margin = '0 auto';
-        clone.style.padding = '20mm';
-        clone.style.background = '#fff';
-
-        // Process images to ensure they load
-        const images = clone.getElementsByTagName('img');
-        await Promise.all(Array.from(images).map(img => {
-            if (img.complete) return Promise.resolve();
-            return new Promise(resolve => {
-                img.onload = resolve;
-                img.onerror = resolve;
-            });
-        }));
-
         // Generate PDF
-        await html2pdf().set(opt).from(clone).save();
+        await html2pdf().set(opt).from(container).save();
 
         // Clean up
-        document.body.removeChild(clone);
+        document.body.removeChild(container);
     } catch (err) {
         console.error("Error exporting to PDF:", err);
         alert("Error exporting to PDF. Please try again.");
