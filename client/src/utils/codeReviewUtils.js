@@ -170,243 +170,52 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
     setIsExporting(true);
 
     try {
-        // Create a new window for printing
-        const printWindow = window.open('', '_blank');
-        if (!printWindow) {
-            throw new Error('Popup blocked. Please allow popups for this site.');
+        const element = document.getElementById('printable-content');
+        if (!element) {
+            throw new Error('Printable content not found');
         }
 
-        // Create the HTML content
-        const content = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Code Review Summary</title>
-                <style>
-                    @page {
-                        size: A4;
-                        margin: 20mm;
-                    }
-                    body {
-                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-                        line-height: 1.6;
-                        color: #333;
-                        background: #fff;
-                    }
-                    .page {
-                        page-break-after: always;
-                        position: relative;
-                        min-height: 297mm;
-                        padding: 20mm;
-                        box-sizing: border-box;
-                    }
-                    .header {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        margin-bottom: 30px;
-                        padding-bottom: 15px;
-                        border-bottom: 2px solid #e5e7eb;
-                    }
-                    .header img {
-                        height: 40px;
-                        width: auto;
-                    }
-                    .header .date {
-                        font-size: 14px;
-                        color: #666;
-                    }
-                    .footer {
-                        position: absolute;
-                        bottom: 20mm;
-                        left: 20mm;
-                        right: 20mm;
-                        text-align: center;
-                        font-size: 12px;
-                        color: #666;
-                        border-top: 1px solid #e5e7eb;
-                        padding-top: 10px;
-                    }
-                    h2 {
-                        font-size: 20px;
-                        font-weight: 600;
-                        margin-bottom: 25px;
-                        color: #1a1a1a;
-                        border-bottom: 1px solid #e5e7eb;
-                        padding-bottom: 10px;
-                    }
-                    h3 {
-                        font-size: 16px;
-                        font-weight: 600;
-                        margin: 20px 0 15px;
-                        color: #1a1a1a;
-                    }
-                    h4 {
-                        font-size: 14px;
-                        font-weight: 600;
-                        margin: 15px 0 10px;
-                        color: #333;
-                    }
-                    p {
-                        margin-bottom: 15px;
-                        color: #444;
-                        font-size: 14px;
-                    }
-                    ul {
-                        list-style-type: disc;
-                        padding-left: 25px;
-                        margin-bottom: 15px;
-                    }
-                    li {
-                        margin-bottom: 8px;
-                        color: #444;
-                        font-size: 14px;
-                    }
-                    pre {
-                        background-color: #f8f9fa;
-                        padding: 15px;
-                        border-radius: 6px;
-                        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-                        font-size: 12px;
-                        line-height: 1.5;
-                        overflow-x: auto;
-                        margin: 15px 0;
-                        border: 1px solid #e5e7eb;
-                    }
-                    .code-label {
-                        font-style: italic;
-                        margin: 15px 0 5px;
-                        color: #666;
-                        font-size: 13px;
-                    }
-                    .section {
-                        margin-bottom: 30px;
-                        padding: 15px;
-                        background: #f8f9fa;
-                        border-radius: 6px;
-                    }
-                    .section-title {
-                        font-weight: 600;
-                        color: #1a1a1a;
-                        margin-bottom: 15px;
-                    }
-                    @media print {
-                        body {
-                            -webkit-print-color-adjust: exact;
-                            print-color-adjust: exact;
-                        }
-                        .page {
-                            margin: 0;
-                            padding: 20mm;
-                        }
-                    }
-                </style>
-            </head>
-            <body>
-                ${formattedReviews.map((file, fileIndex) => `
-                    <div class="page">
-                        <div class="header">
-                            <img src="${window.location.origin}/src/assets/cwl.png" alt="Logo">
-                            <div class="date">${new Date().toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            })}</div>
-                        </div>
-                        
-                        <h2>${file.fileName}</h2>
-                        
-                        ${Object.keys(file.sections).map(sectionName => `
-                            <div class="section">
-                                <h3 class="section-title">${formatSectionTitle(sectionName)}</h3>
-                                ${formatContent(file.sections[sectionName]).map(item => {
-                                    if (item.type === 'list') {
-                                        return `
-                                            <ul>
-                                                ${item.items.map(bullet => `
-                                                    <li>${bullet}</li>
-                                                `).join('')}
-                                            </ul>
-                                        `;
-                                    } else {
-                                        return `<p>${item.content}</p>`;
-                                    }
-                                }).join('')}
-                            </div>
-                        `).join('')}
-                        
-                        ${file.codeSnippets && file.codeSnippets.length > 0 ? `
-                            <div class="section">
-                                <h3 class="section-title">Code Suggestions</h3>
-                                ${file.codeSnippets.map((snippet, index) => `
-                                    <div>
-                                        <h4>${snippet.title || `Code Suggestion ${index + 1}`}</h4>
-                                        ${snippet.type === 'diff' ? `
-                                            <div class="code-label">Original Code:</div>
-                                            <pre>${snippet.before}</pre>
-                                            <div class="code-label">Suggested Code:</div>
-                                            <pre>${snippet.after}</pre>
-                                        ` : `
-                                            <pre>${snippet.code}</pre>
-                                        `}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        ` : ''}
-                        
-                        <div class="footer">
-                            Page ${fileIndex + 1} of ${formattedReviews.length}
-                        </div>
-                    </div>
-                `).join('')}
-            </body>
-            </html>
-        `;
-
-        // Write the content to the new window
-        printWindow.document.write(content);
-        printWindow.document.close();
-
-        // Wait for images to load
-        await new Promise(resolve => {
-            const images = printWindow.document.getElementsByTagName('img');
-            let loadedImages = 0;
-            
-            if (images.length === 0) {
-                resolve();
-                return;
-            }
-
-            Array.from(images).forEach(img => {
-                if (img.complete) {
-                    loadedImages++;
-                    if (loadedImages === images.length) {
-                        resolve();
-                    }
-                } else {
-                    img.onload = () => {
-                        loadedImages++;
-                        if (loadedImages === images.length) {
-                            resolve();
-                        }
-                    };
-                    img.onerror = () => {
-                        loadedImages++;
-                        if (loadedImages === images.length) {
-                            resolve();
-                        }
-                    };
-                }
-            });
-        });
-
-        // Print the window
-        printWindow.print();
-        
-        // Close the window after printing
-        printWindow.onafterprint = () => {
-            printWindow.close();
+        const opt = {
+            margin: 20,
+            filename: 'code-review-summary.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 2,
+                useCORS: true,
+                logging: true
+            },
+            jsPDF: { 
+                unit: 'mm', 
+                format: 'a4', 
+                orientation: 'portrait' 
+            },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
+
+        // Create a clone of the element to modify for PDF
+        const clone = element.cloneNode(true);
+        document.body.appendChild(clone);
+        clone.style.display = 'block';
+        clone.style.width = '210mm';
+        clone.style.margin = '0 auto';
+        clone.style.padding = '20mm';
+        clone.style.background = '#fff';
+
+        // Process images to ensure they load
+        const images = clone.getElementsByTagName('img');
+        await Promise.all(Array.from(images).map(img => {
+            if (img.complete) return Promise.resolve();
+            return new Promise(resolve => {
+                img.onload = resolve;
+                img.onerror = resolve;
+            });
+        }));
+
+        // Generate PDF
+        await html2pdf().set(opt).from(clone).save();
+
+        // Clean up
+        document.body.removeChild(clone);
     } catch (err) {
         console.error("Error exporting to PDF:", err);
         alert("Error exporting to PDF. Please try again.");

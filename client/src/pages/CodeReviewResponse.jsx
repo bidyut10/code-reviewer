@@ -123,7 +123,7 @@ const CodeReviewResponse = () => {
   };
 
   const handleExportPDF = () => {
-    exportToPDF(setIsExporting);
+    exportToPDF(setIsExporting, formattedReviews);
   };
 
   const filterByType = (type) => {
