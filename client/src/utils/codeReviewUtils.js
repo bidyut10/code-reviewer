@@ -1,6 +1,5 @@
 import * as _ from "lodash";
-// import html2pdf from "html2pdf.js";
-
+import html2pdf from "html2pdf.js";
 // Parse the review content into structured sections
 export const parseReviewContent = (content) => {
     // Enhanced parsing to identify sections and code snippets
@@ -189,9 +188,10 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
                         margin: 20mm;
                     }
                     body {
-                        font-family: Arial, sans-serif;
+                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
                         line-height: 1.6;
                         color: #333;
+                        background: #fff;
                     }
                     .page {
                         page-break-after: always;
@@ -204,16 +204,17 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
-                        margin-bottom: 20px;
-                        padding-bottom: 10px;
-                        border-bottom: 1px solid #e5e7eb;
+                        margin-bottom: 30px;
+                        padding-bottom: 15px;
+                        border-bottom: 2px solid #e5e7eb;
                     }
                     .header img {
-                        height: 30px;
+                        height: 40px;
+                        width: auto;
                     }
                     .header .date {
-                        font-size: 12px;
-                        color: #6b7280;
+                        font-size: 14px;
+                        color: #666;
                     }
                     .footer {
                         position: absolute;
@@ -221,60 +222,82 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
                         left: 20mm;
                         right: 20mm;
                         text-align: center;
-                        font-size: 10px;
-                        color: #6b7280;
+                        font-size: 12px;
+                        color: #666;
                         border-top: 1px solid #e5e7eb;
                         padding-top: 10px;
                     }
                     h2 {
-                        font-size: 16px;
-                        font-weight: bold;
-                        margin-bottom: 20px;
-                        color: #1f2937;
+                        font-size: 20px;
+                        font-weight: 600;
+                        margin-bottom: 25px;
+                        color: #1a1a1a;
+                        border-bottom: 1px solid #e5e7eb;
+                        padding-bottom: 10px;
                     }
                     h3 {
-                        font-size: 14px;
-                        font-weight: bold;
-                        margin-bottom: 10px;
-                        color: #1f2937;
+                        font-size: 16px;
+                        font-weight: 600;
+                        margin: 20px 0 15px;
+                        color: #1a1a1a;
                     }
                     h4 {
-                        font-size: 12px;
-                        font-weight: bold;
-                        margin-bottom: 10px;
-                        color: #4b5563;
+                        font-size: 14px;
+                        font-weight: 600;
+                        margin: 15px 0 10px;
+                        color: #333;
                     }
                     p {
                         margin-bottom: 15px;
-                        color: #374151;
+                        color: #444;
+                        font-size: 14px;
                     }
                     ul {
                         list-style-type: disc;
-                        padding-left: 20px;
+                        padding-left: 25px;
                         margin-bottom: 15px;
                     }
                     li {
-                        margin-bottom: 5px;
-                        color: #374151;
+                        margin-bottom: 8px;
+                        color: #444;
+                        font-size: 14px;
                     }
                     pre {
-                        background-color: #f3f4f6;
-                        padding: 10px;
-                        border-radius: 4px;
-                        font-family: monospace;
-                        font-size: 10px;
+                        background-color: #f8f9fa;
+                        padding: 15px;
+                        border-radius: 6px;
+                        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+                        font-size: 12px;
+                        line-height: 1.5;
                         overflow-x: auto;
-                        margin-bottom: 10px;
+                        margin: 15px 0;
+                        border: 1px solid #e5e7eb;
                     }
                     .code-label {
                         font-style: italic;
-                        margin-bottom: 5px;
-                        color: #6b7280;
+                        margin: 15px 0 5px;
+                        color: #666;
+                        font-size: 13px;
+                    }
+                    .section {
+                        margin-bottom: 30px;
+                        padding: 15px;
+                        background: #f8f9fa;
+                        border-radius: 6px;
+                    }
+                    .section-title {
+                        font-weight: 600;
+                        color: #1a1a1a;
+                        margin-bottom: 15px;
                     }
                     @media print {
                         body {
                             -webkit-print-color-adjust: exact;
                             print-color-adjust: exact;
+                        }
+                        .page {
+                            margin: 0;
+                            padding: 20mm;
                         }
                     }
                 </style>
@@ -283,7 +306,7 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
                 ${formattedReviews.map((file, fileIndex) => `
                     <div class="page">
                         <div class="header">
-                            <img src="/src/assets/cwl.png" alt="Logo">
+                            <img src="${window.location.origin}/src/assets/cwl.png" alt="Logo">
                             <div class="date">${new Date().toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: 'long',
@@ -294,37 +317,41 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
                         <h2>${file.fileName}</h2>
                         
                         ${Object.keys(file.sections).map(sectionName => `
-                            <h3>${formatSectionTitle(sectionName)}</h3>
-                            ${formatContent(file.sections[sectionName]).map(item => {
-                                if (item.type === 'list') {
-                                    return `
-                                        <ul>
-                                            ${item.items.map(bullet => `
-                                                <li>${bullet}</li>
-                                            `).join('')}
-                                        </ul>
-                                    `;
-                                } else {
-                                    return `<p>${item.content}</p>`;
-                                }
-                            }).join('')}
+                            <div class="section">
+                                <h3 class="section-title">${formatSectionTitle(sectionName)}</h3>
+                                ${formatContent(file.sections[sectionName]).map(item => {
+                                    if (item.type === 'list') {
+                                        return `
+                                            <ul>
+                                                ${item.items.map(bullet => `
+                                                    <li>${bullet}</li>
+                                                `).join('')}
+                                            </ul>
+                                        `;
+                                    } else {
+                                        return `<p>${item.content}</p>`;
+                                    }
+                                }).join('')}
+                            </div>
                         `).join('')}
                         
                         ${file.codeSnippets && file.codeSnippets.length > 0 ? `
-                            <h3>Code Suggestions</h3>
-                            ${file.codeSnippets.map((snippet, index) => `
-                                <div>
-                                    <h4>${snippet.title || `Code Suggestion ${index + 1}`}</h4>
-                                    ${snippet.type === 'diff' ? `
-                                        <div class="code-label">Original Code:</div>
-                                        <pre>${snippet.before}</pre>
-                                        <div class="code-label">Suggested Code:</div>
-                                        <pre>${snippet.after}</pre>
-                                    ` : `
-                                        <pre>${snippet.code}</pre>
-                                    `}
-                                </div>
-                            `).join('')}
+                            <div class="section">
+                                <h3 class="section-title">Code Suggestions</h3>
+                                ${file.codeSnippets.map((snippet, index) => `
+                                    <div>
+                                        <h4>${snippet.title || `Code Suggestion ${index + 1}`}</h4>
+                                        ${snippet.type === 'diff' ? `
+                                            <div class="code-label">Original Code:</div>
+                                            <pre>${snippet.before}</pre>
+                                            <div class="code-label">Suggested Code:</div>
+                                            <pre>${snippet.after}</pre>
+                                        ` : `
+                                            <pre>${snippet.code}</pre>
+                                        `}
+                                    </div>
+                                `).join('')}
+                            </div>
                         ` : ''}
                         
                         <div class="footer">
@@ -382,6 +409,7 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
         };
     } catch (err) {
         console.error("Error exporting to PDF:", err);
+        alert("Error exporting to PDF. Please try again.");
     } finally {
         setIsExporting(false);
     }

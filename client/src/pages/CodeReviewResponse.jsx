@@ -231,7 +231,7 @@ const CodeReviewResponse = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white" id="printable-content">
+    <div className="min-h-screen bg-gray-50" id="printable-content">
       {/* Header with Logo and Export PDF Button */}
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -261,7 +261,7 @@ const CodeReviewResponse = () => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4">
           <button
             onClick={goBack}
-            className="inline-flex items-center text-gray-900 hover:text-gray-950 transition-colors duration-200"
+            className="inline-flex items-center text-gray-700 hover:text-gray-900 transition-colors duration-200"
           >
             <ChevronLeft className="size-5 mr-1" />
             <span className="font-medium">Go Back</span>
@@ -271,7 +271,7 @@ const CodeReviewResponse = () => {
             <input
               type="text"
               placeholder="Search reviews..."
-              className="pl-10 pr-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-black focus:border-black w-full transition-shadow duration-200"
+              className="pl-10 pr-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-gray-400 focus:border-gray-400 w-full transition-shadow duration-200"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -282,7 +282,7 @@ const CodeReviewResponse = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <h1 className="text-2xl font-semibold text-gray-900 py-4">
+        <h1 className="text-2xl font-semibold text-gray-800 py-4">
           Code Review Summary
         </h1>
 
@@ -297,8 +297,8 @@ const CodeReviewResponse = () => {
                 onClick={() => filterByType("all")}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                   filterActive === "all"
-                    ? "bg-black text-white shadow-sm"
-                    : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                    ? "bg-gray-800 text-white shadow-sm"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
               >
                 All Files
@@ -309,8 +309,8 @@ const CodeReviewResponse = () => {
                   onClick={() => filterByType(type)}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                     filterActive === type
-                      ? "bg-black text-white shadow-sm"
-                      : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                      ? "bg-gray-800 text-white shadow-sm"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
                   {type.toUpperCase()}
@@ -337,22 +337,22 @@ const CodeReviewResponse = () => {
                 >
                   <div className="flex items-center space-x-3">
                     <div className="flex-shrink-0">
-                      <div className="size-10 rounded-md flex items-center justify-center bg-black text-white font-medium">
+                      <div className="size-10 rounded-md flex items-center justify-center bg-gray-800 text-white font-medium">
                         {file.fileType}
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-lg font-medium text-gray-900 truncate">
+                      <h2 className="text-lg font-medium text-gray-800 truncate">
                         {file.fileName}
                       </h2>
                       <div className="flex flex-wrap mt-1 gap-2">
                         {Object.keys(file.sections).length > 0 && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
                             {Object.keys(file.sections).length} sections
                           </span>
                         )}
                         {file.codeSnippets.length > 0 && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
                             {file.codeSnippets.length} code suggestions
                           </span>
                         )}
@@ -380,7 +380,7 @@ const CodeReviewResponse = () => {
                           onClick={() => toggleSection(file.id, section)}
                         >
                           {getSectionIcon(section)}
-                          <h3 className="text-md font-medium">
+                          <h3 className="text-md font-medium text-gray-800">
                             {formatSectionTitle(section)}
                           </h3>
                           <div className="ml-auto">
@@ -394,7 +394,7 @@ const CodeReviewResponse = () => {
 
                         {isSectionActive(file.id, section) && (
                           <div className="px-4 py-3 bg-white border-t">
-                            <div className="prose max-w-none">
+                            <div className="prose max-w-none text-gray-700">
                               {renderFormattedContent(
                                 formatContent(file.sections[section])
                               )}
@@ -414,7 +414,7 @@ const CodeReviewResponse = () => {
                           onClick={() => toggleSection(file.id, "code")}
                         >
                           {getSectionIcon("code")}
-                          <h3 className="text-md font-medium">
+                          <h3 className="text-md font-medium text-gray-800">
                             Code Suggestions
                           </h3>
                           <div className="ml-auto">
@@ -430,7 +430,7 @@ const CodeReviewResponse = () => {
                           <div className="px-4 py-3 bg-white border-t">
                             {file.codeSnippets.map((snippet, index) => (
                               <div key={index} className="mb-6 last:mb-0">
-                                <h4 className="text-sm font-medium text-gray-900 mb-2">
+                                <h4 className="text-sm font-medium text-gray-800 mb-2">
                                   {snippet.title || "Code Suggestion"}
                                 </h4>
                                 {renderCodeSnippet({
@@ -453,20 +453,20 @@ const CodeReviewResponse = () => {
             {!hasReview ? (
               <>
                 <FileText className="mx-auto size-12 text-gray-400" />
-                <h3 className="mt-2 text-lg font-medium text-gray-900">
+                <h3 className="mt-2 text-lg font-medium text-gray-800">
                   No review data available
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-600">
                   There are no code reviews for this repository commit.
                 </p>
               </>
             ) : (
               <>
                 <Search className="mx-auto size-12 text-gray-400" />
-                <h3 className="mt-2 text-lg font-medium text-gray-900">
+                <h3 className="mt-2 text-lg font-medium text-gray-800">
                   No matching results
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-600">
                   Try adjusting your search or filter criteria.
                 </p>
               </>
