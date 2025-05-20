@@ -378,6 +378,16 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
         // Add container to document
         document.body.appendChild(container);
 
+        // Wait for images to load
+        const images = container.getElementsByTagName('img');
+        await Promise.all(Array.from(images).map(img => {
+            if (img.complete) return Promise.resolve();
+            return new Promise(resolve => {
+                img.onload = resolve;
+                img.onerror = resolve;
+            });
+        }));
+
         // Configure PDF options
         const opt = {
             margin: 0,
@@ -386,18 +396,21 @@ export const exportToPDF = async (setIsExporting, formattedReviews) => {
             html2canvas: { 
                 scale: 2,
                 useCORS: true,
-                logging: true
+                logging: true,
+                allowTaint: true,
+                foreignObjectRendering: true
             },
             jsPDF: { 
                 unit: 'mm', 
                 format: 'a4', 
-                orientation: 'portrait' 
+                orientation: 'portrait',
+                compress: true
             },
             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
         // Generate PDF
-        await html2pdf().set(opt).from(container).save();
+        const pdf = await html2pdf().set(opt).from(container).save();
 
         // Clean up
         document.body.removeChild(container);

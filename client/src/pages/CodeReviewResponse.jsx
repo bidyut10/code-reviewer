@@ -231,10 +231,10 @@ const CodeReviewResponse = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50" id="printable-content">
+    <div className="min-h-screen bg-white" id="printable-content">
       {/* Header with Logo and Export PDF Button */}
       <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <div className="max-w-6xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <img src={logo} alt="Logo" className="h-6 w-auto" />
           <button
             onClick={handleExportPDF}
@@ -243,7 +243,7 @@ const CodeReviewResponse = () => {
               ${
                 isExporting || !hasReview
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-black text-white hover:bg-gray-900 hover:scale-105"
+                  : "bg-black text-white hover:bg-gray-900"
               }`}
           >
             {isExporting ? (
@@ -257,7 +257,7 @@ const CodeReviewResponse = () => {
       </header>
 
       {/* Navigation and Search Section */}
-      <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4">
           <button
             onClick={goBack}
@@ -281,7 +281,7 @@ const CodeReviewResponse = () => {
       </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <h1 className="text-2xl font-semibold text-gray-800 py-4">
           Code Review Summary
         </h1>
