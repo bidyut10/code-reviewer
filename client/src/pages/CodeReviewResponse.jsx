@@ -231,15 +231,18 @@ const CodeReviewResponse = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white" id="printable-content">
+    <div className="min-h-screen bg-gray-50" id="printable-content">
       {/* Header with Logo and Export PDF Button */}
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <img src={logo} alt="Logo" className="h-6" />
+          <div className="flex items-center space-x-4">
+            <img src={logo} alt="Logo" className="h-8 w-auto" />
+            <h1 className="text-xl font-semibold text-gray-900 hidden sm:block">Code Review</h1>
+          </div>
           <button
             onClick={handleExportPDF}
             disabled={isExporting || !hasReview}
-            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-normal rounded-md shadow-sm
+            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm transition-colors duration-200
               ${
                 isExporting || !hasReview
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -257,30 +260,32 @@ const CodeReviewResponse = () => {
       </header>
 
       {/* Navigation and Search Section */}
-      <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-4">
-        <button
-          onClick={goBack}
-          className="inline-flex items-center text-gray-900 hover:text-gray-950"
-        >
-          <ChevronLeft className="size-5 mr-1" />
-          <span className="font-normal text-gray-950">Go Back</span>
-        </button>
+      <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4">
+          <button
+            onClick={goBack}
+            className="inline-flex items-center text-gray-900 hover:text-gray-950 transition-colors duration-200"
+          >
+            <ChevronLeft className="size-5 mr-1" />
+            <span className="font-medium">Go Back</span>
+          </button>
 
-        <div className="relative w-full sm:w-64">
-          <input
-            type="text"
-            placeholder="Search reviews..."
-            className="pl-8 pr-4 py-2 border rounded-md text-sm focus:ring-black focus:border-black w-full"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <Search className="absolute left-2 top-2.5 size-4 text-gray-400" />
+          <div className="relative w-full sm:w-64">
+            <input
+              type="text"
+              placeholder="Search reviews..."
+              className="pl-10 pr-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-black focus:border-black w-full transition-shadow duration-200"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Search className="absolute left-3 top-2.5 size-4 text-gray-400" />
+          </div>
         </div>
       </div>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <h1 className="text-xl font-semibold text-gray-900 py-4">
+        <h1 className="text-2xl font-semibold text-gray-900 py-4">
           Code Review Summary
         </h1>
 
@@ -293,7 +298,7 @@ const CodeReviewResponse = () => {
               </span>
               <button
                 onClick={() => filterByType("all")}
-                className={`px-3 py-1 rounded-full text-xs font-medium ${
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 ${
                   filterActive === "all"
                     ? "bg-black text-white"
                     : "bg-gray-100 text-gray-800 hover:bg-gray-200"
@@ -305,7 +310,7 @@ const CodeReviewResponse = () => {
                 <button
                   key={type}
                   onClick={() => filterByType(type)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 ${
                     filterActive === type
                       ? "bg-black text-white"
                       : "bg-gray-100 text-gray-800 hover:bg-gray-200"
@@ -324,11 +329,11 @@ const CodeReviewResponse = () => {
             {filteredReviews.map((file) => (
               <div
                 key={file.id}
-                className="bg-white rounded-lg shadow-sm border overflow-hidden pdf-section"
+                className="bg-white rounded-lg shadow-sm border overflow-hidden pdf-section transition-shadow duration-200 hover:shadow-md"
                 data-filename={file.fileName}
               >
                 <div
-                  className={`px-6 py-5 border-b cursor-pointer hover:bg-gray-50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 ${
+                  className={`px-6 py-5 border-b cursor-pointer hover:bg-gray-50 transition-colors duration-200 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 ${
                     expandedFile === file.id ? "bg-gray-50" : ""
                   }`}
                   onClick={() => toggleFile(file.id)}
@@ -345,12 +350,12 @@ const CodeReviewResponse = () => {
                       </h2>
                       <div className="flex flex-wrap mt-1 gap-2">
                         {Object.keys(file.sections).length > 0 && (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                             {Object.keys(file.sections).length} sections
                           </span>
                         )}
                         {file.codeSnippets.length > 0 && (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
                             {file.codeSnippets.length} code suggestions
                           </span>
                         )}
@@ -370,9 +375,9 @@ const CodeReviewResponse = () => {
                   <div className="px-4 py-5 sm:p-6 space-y-6">
                     {/* Regular review sections */}
                     {Object.keys(file.sections).map((section) => (
-                      <div key={section} className="rounded-md border">
+                      <div key={section} className="rounded-lg border overflow-hidden">
                         <div
-                          className={`flex items-center px-4 py-3 rounded-t-md cursor-pointer ${getSeverityColor(
+                          className={`flex items-center px-4 py-3 cursor-pointer transition-colors duration-200 ${getSeverityColor(
                             section
                           )}`}
                           onClick={() => toggleSection(file.id, section)}
@@ -391,7 +396,7 @@ const CodeReviewResponse = () => {
                         </div>
 
                         {isSectionActive(file.id, section) && (
-                          <div className="px-4 py-3 bg-white rounded-b-md">
+                          <div className="px-4 py-3 bg-white">
                             <div className="prose max-w-none">
                               {renderFormattedContent(
                                 formatContent(file.sections[section])
@@ -404,9 +409,9 @@ const CodeReviewResponse = () => {
 
                     {/* Code suggestions section */}
                     {file.codeSnippets.length > 0 && (
-                      <div className="rounded-md border">
+                      <div className="rounded-lg border overflow-hidden">
                         <div
-                          className={`flex items-center px-4 py-3 rounded-t-md cursor-pointer ${getSeverityColor(
+                          className={`flex items-center px-4 py-3 cursor-pointer transition-colors duration-200 ${getSeverityColor(
                             "code"
                           )}`}
                           onClick={() => toggleSection(file.id, "code")}
@@ -425,7 +430,7 @@ const CodeReviewResponse = () => {
                         </div>
 
                         {isSectionActive(file.id, "code") && (
-                          <div className="px-4 py-3 bg-white rounded-b-md">
+                          <div className="px-4 py-3 bg-white">
                             {file.codeSnippets.map((snippet, index) => (
                               <div key={index} className="mb-6 last:mb-0">
                                 <h4 className="text-sm font-medium text-gray-900 mb-2">

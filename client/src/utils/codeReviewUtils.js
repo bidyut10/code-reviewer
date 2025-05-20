@@ -1,5 +1,4 @@
 import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
 import * as _ from "lodash";
 
 // Parse the review content into structured sections
@@ -167,56 +166,214 @@ export const filterReviews = (reviews, filterActive, searchQuery) => {
         });
 };
 
-// Export reviews to PDF
-export const exportToPDF = async (setIsExporting) => {
+// Export reviews to PDF with selectable text
+export const exportToPDF = async (setIsExporting, formattedReviews) => {
     setIsExporting(true);
 
     try {
-        const pdf = new jsPDF("p", "mm", "a4");
-        const printContent = document.getElementById("printable-content");
-        const contentSections = printContent.querySelectorAll(".pdf-section");
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "pt",
+            format: "a4"
+        });
 
-        let verticalOffset = 10;
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 40;
+        const contentWidth = pageWidth - 2 * margin;
+        const footerHeight = 30;
 
-        // Add title to PDF
-        pdf.setFontSize(16);
-        pdf.setFont("helvetica", "bold");
-        pdf.text("Code Review Summary", 105, verticalOffset, { align: "center" });
-        verticalOffset += 15;
+        // Add header with logo and date
+        const addHeader = (pageNum) => {
+            pdf.setFontSize(20);
+            pdf.setFont("helvetica", "bold");
+            pdf.text("Code Review Summary", pageWidth / 2, margin, { align: "center" });
+            
+            // Add date
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            pdf.setFontSize(12);
+            pdf.setFont("helvetica", "normal");
+            pdf.text(dateStr, pageWidth - margin, margin, { align: "right" });
+        };
 
-        for (let i = 0; i < contentSections.length; i++) {
-            const section = contentSections[i];
+        // Add footer with page numbers
+        const addFooter = (pageNum, totalPages) => {
+            pdf.setFontSize(10);
+            pdf.setFont("helvetica", "normal");
+            pdf.text(
+                `Page ${pageNum} of ${totalPages}`,
+                pageWidth / 2,
+                pageHeight - footerHeight,
+                { align: "center" }
+            );
+        };
 
-            if (i > 0) {
-                // Add a page break between files
+        let currentPage = 1;
+        let totalPages = 1;
+        let yPosition = margin + 60; // Increased to account for header
+
+        // First pass to count total pages
+        formattedReviews.forEach(file => {
+            // Estimate pages needed for this file
+            const contentLength = JSON.stringify(file).length;
+            const estimatedPages = Math.ceil(contentLength / 5000); // Rough estimate
+            totalPages += estimatedPages;
+        });
+
+        // Process each review
+        for (let fileIndex = 0; fileIndex < formattedReviews.length; fileIndex++) {
+            const file = formattedReviews[fileIndex];
+
+            // Add new page if not the first file
+            if (fileIndex > 0) {
                 pdf.addPage();
-                verticalOffset = 10;
+                currentPage++;
+                yPosition = margin + 60;
             }
 
-            // Create canvas from content section
-            const canvas = await html2canvas(section, {
-                scale: 1,
-                useCORS: true,
-                logging: false,
-                allowTaint: true,
+            // Add header to each page
+            addHeader(currentPage);
+
+            // File heading
+            pdf.setFontSize(16);
+            pdf.setFont("helvetica", "bold");
+            pdf.text(file.fileName, margin, yPosition += 30);
+
+            // Add sections
+            Object.keys(file.sections).forEach(sectionName => {
+                if (yPosition > pageHeight - 100) {
+                    pdf.addPage();
+                    currentPage++;
+                    yPosition = margin + 60;
+                    addHeader(currentPage);
+                }
+
+                // Section title
+                yPosition += 30;
+                pdf.setFontSize(14);
+                pdf.setFont("helvetica", "bold");
+                pdf.text(formatSectionTitle(sectionName), margin, yPosition);
+
+                // Section content
+                pdf.setFontSize(12);
+                pdf.setFont("helvetica", "normal");
+
+                const contentLines = formatTextForPDF(file.sections[sectionName], contentWidth, pdf);
+                contentLines.forEach(line => {
+                    if (yPosition > pageHeight - 100) {
+                        pdf.addPage();
+                        currentPage++;
+                        yPosition = margin + 60;
+                        addHeader(currentPage);
+                    }
+                    yPosition += 20;
+                    pdf.text(line, margin, yPosition);
+                });
+
+                yPosition += 20; // Add space after section
             });
 
-            // Convert canvas to image data
-            const imgData = canvas.toDataURL("image/png");
+            // Add code snippets
+            if (file.codeSnippets && file.codeSnippets.length > 0) {
+                if (yPosition > pageHeight - 100) {
+                    pdf.addPage();
+                    currentPage++;
+                    yPosition = margin + 60;
+                    addHeader(currentPage);
+                }
 
-            // Calculate dimensions to fit in PDF
-            const imgWidth = 190;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                yPosition += 30;
+                pdf.setFontSize(14);
+                pdf.setFont("helvetica", "bold");
+                pdf.text("Code Suggestions", margin, yPosition);
 
-            // Add file title
-            const fileTitle = section.dataset.filename || `File ${i + 1}`;
-            pdf.setFontSize(14);
-            pdf.setFont("helvetica", "bold");
-            pdf.text(fileTitle, 10, verticalOffset);
-            verticalOffset += 10;
+                file.codeSnippets.forEach((snippet, snippetIndex) => {
+                    if (yPosition > pageHeight - 120) {
+                        pdf.addPage();
+                        currentPage++;
+                        yPosition = margin + 60;
+                        addHeader(currentPage);
+                    }
 
-            // Add the content image
-            pdf.addImage(imgData, "PNG", 10, verticalOffset, imgWidth, imgHeight);
+                    // Snippet title
+                    yPosition += 30;
+                    pdf.setFontSize(12);
+                    pdf.setFont("helvetica", "bold");
+                    pdf.text(snippet.title || `Code Suggestion ${snippetIndex + 1}`, margin, yPosition);
+
+                    // Code content
+                    pdf.setFontSize(10);
+                    pdf.setFont("courier", "normal");
+
+                    if (snippet.type === "diff") {
+                        // Before code
+                        yPosition += 20;
+                        pdf.setFont("helvetica", "italic");
+                        pdf.text("Original Code:", margin, yPosition);
+
+                        const beforeLines = formatCodeForPDF(snippet.before, contentWidth - 20, pdf);
+                        pdf.setFont("courier", "normal");
+                        beforeLines.forEach(line => {
+                            if (yPosition > pageHeight - 80) {
+                                pdf.addPage();
+                                currentPage++;
+                                yPosition = margin + 60;
+                                addHeader(currentPage);
+                            }
+                            yPosition += 16;
+                            pdf.text(line, margin + 10, yPosition);
+                        });
+
+                        // After code
+                        if (yPosition > pageHeight - 120) {
+                            pdf.addPage();
+                            currentPage++;
+                            yPosition = margin + 60;
+                            addHeader(currentPage);
+                        }
+
+                        yPosition += 20;
+                        pdf.setFont("helvetica", "italic");
+                        pdf.text("Suggested Code:", margin, yPosition);
+
+                        const afterLines = formatCodeForPDF(snippet.after, contentWidth - 20, pdf);
+                        pdf.setFont("courier", "normal");
+                        afterLines.forEach(line => {
+                            if (yPosition > pageHeight - 80) {
+                                pdf.addPage();
+                                currentPage++;
+                                yPosition = margin + 60;
+                                addHeader(currentPage);
+                            }
+                            yPosition += 16;
+                            pdf.text(line, margin + 10, yPosition);
+                        });
+                    } else {
+                        // Regular code snippet
+                        const codeLines = formatCodeForPDF(snippet.code, contentWidth - 20, pdf);
+                        codeLines.forEach(line => {
+                            if (yPosition > pageHeight - 80) {
+                                pdf.addPage();
+                                currentPage++;
+                                yPosition = margin + 60;
+                                addHeader(currentPage);
+                            }
+                            yPosition += 16;
+                            pdf.text(line, margin + 10, yPosition);
+                        });
+                    }
+
+                    yPosition += 20; // Space after snippet
+                });
+            }
+
+            // Add footer to each page
+            addFooter(currentPage, totalPages);
         }
 
         pdf.save("code-review-summary.pdf");
@@ -227,19 +384,93 @@ export const exportToPDF = async (setIsExporting) => {
     }
 };
 
+// Format text for PDF with proper line breaks
+const formatTextForPDF = (text, maxWidth, pdf) => {
+    if (!text) return [];
+
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(12);
+
+    const lines = [];
+    text.split("\n").forEach(paragraph => {
+        if (paragraph.trim() === "") {
+            lines.push(" ");
+            return;
+        }
+
+        // Handle bullet points
+        if (paragraph.trim().startsWith("•") || paragraph.trim().startsWith("-")) {
+            const bulletItems = paragraph.split(/[•-]\s+/).filter(Boolean);
+            bulletItems.forEach(item => {
+                const wrappedText = pdf.splitTextToSize("• " + item.trim(), maxWidth);
+                wrappedText.forEach((line, i) => {
+                    if (i > 0) {
+                        // Indent continuing bullet point lines
+                        lines.push("  " + line);
+                    } else {
+                        lines.push(line);
+                    }
+                });
+            });
+        } else {
+            // Regular paragraph
+            const wrappedText = pdf.splitTextToSize(paragraph, maxWidth);
+            lines.push(...wrappedText);
+        }
+    });
+
+    return lines;
+};
+
+// Format code for PDF with proper line breaks
+const formatCodeForPDF = (code, maxWidth, pdf) => {
+    if (!code) return [];
+
+    pdf.setFont("courier", "normal");
+    pdf.setFontSize(10);
+
+    const lines = [];
+    code.split("\n").forEach(line => {
+        if (pdf.getStringUnitWidth(line) * 10 > maxWidth) {
+            // If line is too long, wrap it
+            const wrappedText = pdf.splitTextToSize(line, maxWidth);
+            lines.push(...wrappedText);
+        } else {
+            lines.push(line);
+        }
+    });
+
+    return lines;
+};
+
 // Get UI style helpers
 export const getSeverityColor = (sectionName) => {
     switch (sectionName) {
         case "strengths":
-            return "bg-green-100 text-green-800 border-green-200";
+            return "bg-emerald-100 text-emerald-800 border-emerald-200";
         case "weaknesses":
-            return "bg-yellow-100 text-yellow-800 border-yellow-200";
+            return "bg-amber-100 text-amber-800 border-amber-200";
         case "recommendations":
-            return "bg-blue-100 text-blue-800 border-blue-200";
+            return "bg-sky-100 text-sky-800 border-sky-200";
         case "code":
             return "bg-indigo-100 text-indigo-800 border-indigo-200";
         default:
-            return "bg-gray-100 text-gray-800 border-gray-200";
+            return "bg-slate-100 text-slate-800 border-slate-200";
+    }
+};
+
+export const getSectionBgColor = (sectionName) => {
+    switch (sectionName) {
+        case "strengths":
+            return "bg-emerald-50";
+        case "weaknesses":
+            return "bg-amber-50";
+        case "recommendations":
+            return "bg-sky-50";
+        case "code":
+            return "bg-indigo-50";
+        default:
+            return "bg-slate-50";
     }
 };
 
